@@ -1,0 +1,38 @@
+agent: "SACDIS"
+env_name: "Classic Control"
+env_id: "MountainCar-v0"
+vectorize: "Dummy_Gym"
+policy: "Discrete_SAC"
+representation: "Basic_MLP"
+runner: "DRL"
+
+representation_hidden_size: [128,]
+actor_hidden_size: [128,]
+critic_hidden_size: [128,]
+activation: "relu"
+
+seed: 1
+parallels: 10
+buffer_size: 200000
+batch_size: 256
+actor_learning_rate: 0.001
+critic_learning_rate: 0.01
+gamma: 0.98
+alpha: 0.2
+use_automatic_entropy_tuning: True
+tau: 0.005
+
+training_frequency: 2
+running_steps: 500000
+start_training: 2000
+
+use_obsnorm: False
+use_rewnorm: False
+obsnorm_range: 5
+rewnorm_range: 5
+
+test_steps: 10000
+eval_interval: 50000
+test_episode: 5
+log_dir: "./logs/sac/"
+model_dir: "./models/sac/"
