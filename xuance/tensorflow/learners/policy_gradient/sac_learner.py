@@ -23,7 +23,7 @@ class SAC_Learner(Learner):
             with tf.GradientTape() as tape:
                 # critic update
                 _, action_q = self.policy.Qaction(obs_batch, act_batch)
-                # with torch.no_grad():
+                # with torchAgent.no_grad():
                 _, log_pi_next, target_q = self.policy.Qtarget(next_batch)
                 target_q = tf.reshape(target_q, [-1])
                 log_pi_next = tf.reshape(log_pi_next, [-1])

@@ -7,8 +7,8 @@ import torch.optim
 from xuance import get_arguments
 from xuance.common import space2shape
 from xuance.environment import make_envs
-from xuance.torch.utils.operations import set_seed
-from xuance.torch.utils import ActivationFunctions
+from xuance.torchAgent.utils.operations import set_seed
+from xuance.torchAgent.utils import ActivationFunctions
 
 
 def parse_args():
@@ -40,7 +40,7 @@ def run(args):
     n_envs = envs.num_envs
 
     # prepare representation
-    from xuance.torch.representations import Basic_CNN
+    from xuance.torchAgent.representations import Basic_CNN
     representation = Basic_CNN(input_shape=space2shape(args.observation_space),
                                kernels=args.kernels,
                                strides=args.strides,
@@ -51,7 +51,7 @@ def run(args):
                                device=args.device)
 
     # prepare policy
-    from xuance.torch.policies import BasicQnetwork
+    from xuance.torchAgent.policies import BasicQnetwork
     policy = BasicQnetwork(action_space=args.action_space,
                            representation=representation,
                            hidden_size=args.q_hidden_size,
@@ -61,7 +61,7 @@ def run(args):
                            device=args.device)
 
     # prepare agent
-    from xuance.torch.agents import DQN_Agent, get_total_iters
+    from xuance.torchAgent.agents import DQN_Agent, get_total_iters
     optimizer = torch.optim.Adam(policy.parameters(), args.learning_rate, eps=1e-5)
     lr_scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0,
                                                      total_iters=get_total_iters(agent_name, args))

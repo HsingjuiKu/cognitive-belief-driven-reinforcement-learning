@@ -161,8 +161,8 @@ def get_runner(method,
     dl_toolbox = args[0].dl_toolbox if type(args) == list else args.dl_toolbox
     print("Calculating device:", device)
 
-    if dl_toolbox == "torch":
-        from xuance.torch.runners import REGISTRY as run_REGISTRY
+    if dl_toolbox == "torchAgent":
+        from xuance.torchAgent.runners import REGISTRY as run_REGISTRY
         print("Deep learning toolbox: PyTorch.")
     elif dl_toolbox == "mindspore":
         from xuance.mindspore.runners import REGISTRY as run_REGISTRY

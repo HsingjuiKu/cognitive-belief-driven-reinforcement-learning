@@ -11,7 +11,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 from xuance import get_arguments
 from xuance.environment import make_envs
-from xuance.torch.utils.operations import set_seed
+from xuance.torchAgent.utils.operations import set_seed
 from xuance.common import get_time_string
 
 
@@ -83,7 +83,7 @@ class Runner(object):
         self.args.action_space = self.envs.action_space
         self.args.state_space = None
         self.args.rew_shape, self.args.done_shape = (self.args.n_agents, 1), (self.args.n_agents,)
-        from xuance.torch.agents import MADDPG_Agents
+        from xuance.torchAgent.agents import MADDPG_Agents
         self.agents = MADDPG_Agents(self.args, self.envs, self.args.device)
         self.current_step, self.current_episode = 0, np.zeros((self.envs.num_envs,), np.int32)
 

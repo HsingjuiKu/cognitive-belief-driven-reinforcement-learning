@@ -25,7 +25,7 @@ class SACDIS_Learner(Learner):
             with tf.GradientTape() as tape:
                 _, action_q = self.policy.Qaction(obs_batch)
                 action_q = tf.gather(params=action_q, indices=act_batch, axis=-1, batch_dims=-1)
-                # with torch.no_grad():
+                # with torchAgent.no_grad():
                 action_prob_next, log_pi_next, target_q = self.policy.Qtarget(next_batch)
                 target_q = action_prob_next * (target_q - 0.01 * log_pi_next)
                 target_q = tf.expand_dims(tf.reduce_sum(target_q, axis=1), axis=-1)

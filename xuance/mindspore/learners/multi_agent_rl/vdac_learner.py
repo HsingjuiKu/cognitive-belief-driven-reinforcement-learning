@@ -4,7 +4,7 @@ Paper link: https://ojs.aaai.org/index.php/AAAI/article/view/17353
 Implementation: MindSpore
 """
 from xuance.mindspore.learners import *
-from xuance.torch.utils.operations import update_linear_decay
+from xuance.torchAgent.utils.operations import update_linear_decay
 
 
 class VDAC_Learner(LearnerMAS):

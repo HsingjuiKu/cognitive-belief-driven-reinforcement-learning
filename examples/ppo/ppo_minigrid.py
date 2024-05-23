@@ -7,8 +7,8 @@ import torch.optim
 from xuance import get_arguments
 from xuance.common import space2shape
 from xuance.environment import make_envs
-from xuance.torch.utils.operations import set_seed
-from xuance.torch.utils import ActivationFunctions
+from xuance.torchAgent.utils.operations import set_seed
+from xuance.torchAgent.utils import ActivationFunctions
 
 
 def parse_args():
@@ -39,7 +39,7 @@ def run(args):
     n_envs = envs.num_envs
 
     # prepare representation
-    from xuance.torch.representations import Basic_MLP
+    from xuance.torchAgent.representations import Basic_MLP
     representation = Basic_MLP(input_shape=space2shape(args.observation_space),
                                hidden_sizes=args.representation_hidden_size,
                                normalize=None,
@@ -48,7 +48,7 @@ def run(args):
                                device=args.device)
 
     # prepare policy
-    from xuance.torch.policies import Categorical_AC_Policy
+    from xuance.torchAgent.policies import Categorical_AC_Policy
     policy = Categorical_AC_Policy(action_space=args.action_space,
                                    representation=representation,
                                    actor_hidden_size=args.actor_hidden_size,
@@ -59,7 +59,7 @@ def run(args):
                                    device=args.device)
 
     # prepare agent
-    from xuance.torch.agents import PPOCLIP_Agent, get_total_iters
+    from xuance.torchAgent.agents import PPOCLIP_Agent, get_total_iters
     optimizer = torch.optim.Adam(policy.parameters(), args.learning_rate, eps=1e-5)
     lr_scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0,
                                                      total_iters=get_total_iters(agent_name, args))

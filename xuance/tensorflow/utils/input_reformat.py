@@ -1,6 +1,6 @@
 from xuance.common import space2shape
 from copy import deepcopy
-from xuance.torch.utils import ActivationFunctions, NormalizeFunctions, InitializeFunctions
+from xuance.torchAgent.utils import ActivationFunctions, NormalizeFunctions, InitializeFunctions
 from xuance.tensorflow.policies import Policy_Inputs, Policy_Inputs_All
 from xuance.tensorflow.representations import Representation_Inputs, Representation_Inputs_All
 from operator import itemgetter

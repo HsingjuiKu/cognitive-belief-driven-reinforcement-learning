@@ -7,8 +7,8 @@ import torch.optim
 from xuance import get_arguments
 from xuance.common import space2shape
 from xuance.environment import make_envs
-from xuance.torch.utils.operations import set_seed
-from xuance.torch.utils import ActivationFunctions
+from xuance.torchAgent.utils.operations import set_seed
+from xuance.torchAgent.utils import ActivationFunctions
 
 
 def parse_args():
@@ -39,12 +39,12 @@ def run(args):
     n_envs = envs.num_envs
 
     # prepare representation
-    from xuance.torch.representations import Basic_Identical
+    from xuance.torchAgent.representations import Basic_Identical
     representation = Basic_Identical(input_shape=space2shape(args.observation_space),
                                      device=args.device)
 
     # prepare policy
-    from xuance.torch.policies import Gaussian_SAC_Policy
+    from xuance.torchAgent.policies import Gaussian_SAC_Policy
     policy = Gaussian_SAC_Policy(action_space=args.action_space,
                                  representation=representation,
                                  actor_hidden_size=args.actor_hidden_size,
@@ -56,7 +56,7 @@ def run(args):
                                  device=args.device)
 
     # prepare agent
-    from xuance.torch.agents import SAC_Agent, get_total_iters
+    from xuance.torchAgent.agents import SAC_Agent, get_total_iters
     actor_optimizer = torch.optim.Adam(policy.actor_parameters, args.actor_learning_rate)
     critic_optimizer = torch.optim.Adam(policy.critic_parameters, args.critic_learning_rate)
     actor_lr_scheduler = torch.optim.lr_scheduler.LinearLR(actor_optimizer, start_factor=1.0, end_factor=0.25,

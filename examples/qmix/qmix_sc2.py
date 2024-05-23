@@ -10,7 +10,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 from xuance import get_arguments
 from xuance.environment import make_envs
-from xuance.torch.utils.operations import set_seed
+from xuance.torchAgent.utils.operations import set_seed
 from xuance.common import get_time_string
 
 
@@ -89,7 +89,7 @@ class Runner(object):
         args.state_space = self.envs.state_space
 
         # build QMIX agents.
-        from xuance.torch.agents import QMIX_Agents
+        from xuance.torchAgent.agents import QMIX_Agents
         self.agents = QMIX_Agents(args, self.envs, args.device)
 
     def log_infos(self, info: dict, x_index: int):

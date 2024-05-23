@@ -10,7 +10,7 @@ from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 
 from xuance import get_arguments
-from xuance.torch.utils.operations import set_seed
+from xuance.torchAgent.utils.operations import set_seed
 from xuance.common import get_time_string
 from gymnasium.spaces import Box
 
@@ -103,7 +103,7 @@ class Runner(object):
             self.dim_act = args.dim_act = args.action_space.n
             args.act_shape = ()
 
-        from xuance.torch.agents import MAPPO_Agents
+        from xuance.torchAgent.agents import MAPPO_Agents
         self.agents = MAPPO_Agents(self.args, self.envs, self.args.device)
         self.on_policy = self.agents.on_policy
 

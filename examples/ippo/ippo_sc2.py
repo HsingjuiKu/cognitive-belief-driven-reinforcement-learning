@@ -10,7 +10,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 from xuance import get_arguments
 from xuance.environment import make_envs
-from xuance.torch.utils.operations import set_seed
+from xuance.torchAgent.utils.operations import set_seed
 from xuance.common import get_time_string
 
 
@@ -89,7 +89,7 @@ class Runner():
         args.state_space = self.envs.state_space
 
         # Create IPPO agents
-        from xuance.torch.agents import IPPO_Agents
+        from xuance.torchAgent.agents import IPPO_Agents
         self.agents = IPPO_Agents(args, self.envs, args.device)
 
     def log_infos(self, info: dict, x_index: int):

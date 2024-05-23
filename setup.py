@@ -36,11 +36,11 @@ setup(
         'Programming Language :: Python :: 3.10',
     ],
     extras_require={
-        "torch": ["torch==1.13.0"],
+        "torchAgent": ["torchAgent==1.13.0"],
         "tensorflow": ["tensorflow==2.6.0"],
         "mindspore": ["mindspore==2.2.0"],
         "all": [
-            "torch==1.13.0",
+            "torchAgent==1.13.0",
             "tensorflow==2.6.0",
             "mindspore==2.2.0"  # mindspore might be installed manually.
         ],

@@ -10,7 +10,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 from xuance import get_arguments
 from xuance.environment import make_envs
-from xuance.torch.utils.operations import set_seed
+from xuance.torchAgent.utils.operations import set_seed
 from gymnasium.spaces import Box, Discrete
 from tqdm import tqdm
 
@@ -102,7 +102,7 @@ class Runner(object):
             args.act_shape = ()
 
         # build QMIX agents.
-        from xuance.torch.agents import VDN_Agents
+        from xuance.torchAgent.agents import VDN_Agents
         self.agents = VDN_Agents(args, self.envs, args.device)
 
     def log_infos(self, info: dict, x_index: int):

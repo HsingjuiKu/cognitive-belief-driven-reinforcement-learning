@@ -20,8 +20,8 @@ def set_seed(seed):
     random.seed(seed)
 
 # def get_flat_grad(y: tf.Tensor, model: tk.Model) -> tf.Tensor:
-#     grads = torch.autograd.grad(y, model.parameters())
-#     return torch.cat([grad.reshape(-1) for grad in grads])
+#     grads = torchAgent.autograd.grad(y, model.parameters())
+#     return torchAgent.cat([grad.reshape(-1) for grad in grads])
 
 
 def get_flat_params(model: tk.Model) -> tf.Tensor:

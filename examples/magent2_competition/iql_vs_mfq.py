@@ -8,12 +8,12 @@ from copy import deepcopy
 import numpy as np
 from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
-from xuance.torch.agents import REGISTRY as REGISTRY_Agent
+from xuance.torchAgent.agents import REGISTRY as REGISTRY_Agent
 from gymnasium.spaces.box import Box
 
 from xuance import get_arguments
 from xuance.environment import make_envs
-from xuance.torch.utils.operations import set_seed
+from xuance.torchAgent.utils.operations import set_seed
 from xuance.common import get_time_string
 
 
