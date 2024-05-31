@@ -46,7 +46,8 @@ from .qlearning_family import (
     C51_Agent,
     QRDQN_Agent,
     PerDQN_Agent,
-    DRQN_Agent
+    DRQN_Agent,
+    CBDDQN_Agent
 )
 '''
 Multi-Agent DRL algorithms
@@ -92,6 +93,7 @@ REGISTRY = {
     "MPDQN": MPDQN_Agent,
     "SPDQN": SPDQN_Agent,
     "DRQN": DRQN_Agent,
+    'CBDDQN': CBDDQN_Agent,
 
     "RANDOM": RandomAgents,
     "IQL": IQL_Agents,

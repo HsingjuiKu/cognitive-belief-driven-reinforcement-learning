@@ -5,3 +5,4 @@ from .c51_learner import C51_Learner
 from .perdqn_learner import PerDQN_Learner
 from .qrdqn_learner import QRDQN_Learner
 from .drqn_learner import DRQN_Learner
+from .cbddqn_learner import CBDDQN_Learner

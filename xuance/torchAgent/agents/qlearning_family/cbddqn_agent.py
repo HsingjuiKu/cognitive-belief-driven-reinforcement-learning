@@ -3,7 +3,7 @@ from xuance.cluster_tool import ClusterTool
 from xuance.torchAgent.learners import *
 from xuance.torchAgent.learners.qlearning_family.cbddqn_learner import *
 
-class CBDDQNAgent(Agent):
+class CBDDQN_Agent(Agent):
     def __init__(self,
                  config: Namespace,
                  envs: DummyVecEnv_Gym,
@@ -48,7 +48,7 @@ class CBDDQNAgent(Agent):
                                         self.action_space.n,
                                         config.n_clusters)
 
-        super(CBDDQNAgent, self).__init__(config, envs, policy, memory, learner, device, config.log_dir, config.model_dir)
+        super(CBDDQN_Agent, self).__init__(config, envs, policy, memory, learner, device, config.log_dir, config.model_dir)
 
     def _action(self, obs, egreedy=0.0):
         _, argmax_action, _ = self.policy(obs)

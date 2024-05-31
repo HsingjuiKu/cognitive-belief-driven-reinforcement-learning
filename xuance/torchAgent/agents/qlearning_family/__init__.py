@@ -6,3 +6,4 @@ from .noisydqn_agent import NoisyDQN_Agent
 from .perdqn_agent import PerDQN_Agent
 from .qrdqn_agent import QRDQN_Agent
 from .drqn_agent import DRQN_Agent
+from .cbddqn_agent import CBDDQN_Agent

@@ -30,7 +30,8 @@ from .qlearning_family import (
     PerDQN_Learner,
     C51_Learner,
     QRDQN_Learner,
-    DRQN_Learner
+    DRQN_Learner,
+    CBDDQN_Learner
 )
 
 from .multi_agent_rl import (

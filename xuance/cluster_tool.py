@@ -24,8 +24,8 @@ class ClusterTool:
 
     def get_cluster(self, state):
         # 获取状态对应的簇
-        state = state.reshape(1, -1)
-        cluster = self.kmeans.predict(state)[0]
+        tmp = state.reshape(-1, 84)
+        cluster = self.kmeans.predict(np.array(tmp, dtype=np.float64))[0]
         return cluster
 
     def update_action_counts(self, state, action):
@@ -43,7 +43,6 @@ class ClusterTool:
 
     def compute_belief_distribution(self, state, beta_t, immediate_belief, k):
         # 计算综合概率分布 b_t(a | s_{t+1})，并应用Clipped Softmax
-        cluster = self.get_cluster(state)
         prior_probs = np.array([self.get_action_prob(state, a) for a in range(self.action_space)])
         immediate_belief = clipped_softmax(immediate_belief, k)
         comprehensive_prob = beta_t * prior_probs + (1 - beta_t) * immediate_belief
