@@ -5,11 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="006d0cfd-a484-4d6b-91a6-52b4273f0b5f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xuance/cluster_tool.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xuance/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cognitive-belief-driven-qlearning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cognitive-belief-driven-qlearning.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-0/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.19" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-1/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.17" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-2/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.15" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-3/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-4/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-5/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.11" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-6/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.7" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-7/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-8/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.13" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Episode-Steps_env-9/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.9" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-0/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.20" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-1/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.18" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-2/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.16" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-3/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-4/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.6" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-5/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.12" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-6/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-7/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-8/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.14" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/Train-Episode-Rewards_env-9/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.10" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0615_163138/events.out.tfevents.1718440298.DESKTOP-TLH6550.2768.0" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/benchmark.py" beforeDir="false" afterPath="$PROJECT_DIR$/benchmark.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_cbddqn.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_cbddqn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/cluster_tool.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/cluster_tool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/cbddqn/classic_control/CartPole-v1.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/cbddqn/classic_control/CartPole-v1.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/environment/magent2/libmagent.so" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/environment/magent2/libmagent.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/torchAgent/agents/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/torchAgent/agents/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/torchAgent/agents/qlearning_family/cbddqn_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/torchAgent/agents/qlearning_family/cbddqn_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/torchAgent/learners/qlearning_family/cbddqn_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/torchAgent/learners/qlearning_family/cbddqn_learner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/torchAgent/learners/qlearning_family/dqn_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/torchAgent/learners/qlearning_family/dqn_learner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,12 +59,16 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2grQziLpjRGu3JHDxgzsOWX5JHM" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -50,6 +80,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -62,14 +93,47 @@
       <option name="presentableId" value="Default" />
       <updated>1716453481596</updated>
       <workItem from="1716453482659" duration="11000" />
-      <workItem from="1716453752165" duration="1414000" />
+      <workItem from="1716453752165" duration="15846000" />
+      <workItem from="1716865372717" duration="7000" />
+      <workItem from="1717076780880" duration="23000" />
+      <workItem from="1717076831864" duration="685000" />
+      <workItem from="1717173273861" duration="7102000" />
+      <workItem from="1717667965409" duration="7000" />
+      <workItem from="1717670731714" duration="2161000" />
+      <workItem from="1717692827940" duration="1938000" />
+      <workItem from="1717825482445" duration="438000" />
+      <workItem from="1717827548943" duration="8250000" />
+      <workItem from="1718005762028" duration="375000" />
+      <workItem from="1718184252025" duration="23950000" />
+      <workItem from="1718431256470" duration="1305000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$test.coverage" NAME="test Coverage Results" MODIFIED="1716455058481" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/xuance" />
+    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$cbddqn_agent.coverage" NAME="cbddqn_agent Coverage Results" MODIFIED="1717854583983" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/xuance/torchAgent/agents/qlearning_family" />
+    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$gym_env.coverage" NAME="gym_env Coverage Results" MODIFIED="1716455329283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/xuance/environment/gym" />
+    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$benchmark.coverage" NAME="benchmark Coverage Results" MODIFIED="1717836616870" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$dqn_atari.coverage" NAME="dqn_atari Coverage Results" MODIFIED="1717173766467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples/dqn" />
+    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$test.coverage" NAME="test Coverage Results" MODIFIED="1717175179838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/xuance" />
+    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$cluster_tool.coverage" NAME="cluster_tool Coverage Results" MODIFIED="1716456473252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/xuance" />
+    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$train_cbddqn.coverage" NAME="train_cbddqn Coverage Results" MODIFIED="1718197600082" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/cognitive_belief_driven_qlearning$demo.coverage" NAME="demo Coverage Results" MODIFIED="1717827573458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
