@@ -22,6 +22,7 @@ class DQN_Learner(Learner):
 
         _, _, evalQ = self.policy(obs_batch)
         _, _, targetQ = self.policy.target(next_batch)
+
         targetQ = targetQ.max(dim=-1).values
         targetQ = rew_batch + self.gamma * (1 - ter_batch) * targetQ
         predictQ = (evalQ * F.one_hot(act_batch.long(), evalQ.shape[1])).sum(dim=-1)
