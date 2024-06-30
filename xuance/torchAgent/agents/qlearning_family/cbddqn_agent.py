@@ -2,6 +2,11 @@ from xuance.torchAgent.agents import *
 from xuance.cluster_tool import ClusterTool
 from xuance.torchAgent.learners import *
 from xuance.torchAgent.learners.qlearning_family.cbddqn_learner import *
+from xuance.state_categorizer import StateCategorizer
+import numpy as np
+
+
+
 
 class CBDDQN_Agent(Agent):
     def __init__(self,
@@ -44,9 +49,20 @@ class CBDDQN_Agent(Agent):
                                  config.gamma,
                                  config.sync_frequency)
 
-        self.cluster_tool = ClusterTool(np.random.rand(1000, space2shape(self.observation_space)[0]),
-                                        self.action_space.n,
-                                        config.n_clusters)
+        # self.cluster_tool = ClusterTool(np.random.rand(1000, space2shape(self.observation_space)[0]),
+        #                                 self.action_space.n,
+        #                                 config.n_clusters,
+        #                                 'cuda:0')
+
+        self.state_categorizer = StateCategorizer(
+                                        state_space=np.random.rand(1000, space2shape(self.observation_space)[0]).astype(np.float32),
+                                        action_space=self.action_space.n,
+                                        n_categories=getattr(config, 'n_categories', 10)
+                                        )
+
+
+        # self.state_action_history = []
+        # self.update_frequency = 100
 
         super(CBDDQN_Agent, self).__init__(config, envs, policy, memory, learner, device, config.log_dir, config.model_dir)
 
@@ -70,24 +86,47 @@ class CBDDQN_Agent(Agent):
 
             # 更新动作选择频率
             for o, a in zip(obs, acts):
-                self.cluster_tool.update_action_counts(o, a)
+                # self.cluster_tool.update_action_counts(o, a)
+                self.state_categorizer.update_action_counts(o, a)
+
+
+            # # 累积状态和动作对
+            # self.state_action_history.extend(zip(obs, acts))
+            # # 达到更新频率时，随机抽取状态-动作对进行更新
+            # if len(self.state_action_history) >= self.update_frequency:
+            #     sample = random.sample(self.state_action_history, min(5, len(self.state_action_history)))
+            #     states, actions = zip(*sample)
+            #     self.cluster_tool.update_action_counts(states, actions)
+            #     self.state_action_history = []
 
             self.memory.store(obs, acts, self._process_reward(rewards), terminals, self._process_observation(next_obs))
             if self.current_step > self.start_training and self.current_step % self.train_frequency == 0:
                 # training
                 obs_batch, act_batch, rew_batch, terminal_batch, next_batch = self.memory.sample()
 
-                # 计算b_t(a|s_{t+1})
-                belief_distributions = []
-                for state in next_batch:
-                    immediate_belief = self.policy(state)[2].detach().cpu().numpy()
-                    beta_t = min(self.beta_t + self.beta_step, self.beta_max)
-                    self.beta_t = beta_t  # 更新beta_t
-                    belief_distribution = self.cluster_tool.compute_belief_distribution(state, beta_t, immediate_belief, self.k)
-                    belief_distributions.append(belief_distribution)
+                # obs_batch = torch.tensor(obs_batch, device=self.device).float()
+                # act_batch = torch.tensor(act_batch, device=self.device).long()
+                # rew_batch = torch.tensor(rew_batch, device=self.device).float()
+                # terminal_batch = torch.tensor(terminal_batch, device=self.device).float()
+                # next_batch = torch.tensor(next_batch, device=self.device).float()
 
-                # 更新Q值
-                step_info = self.learner.update(obs_batch, act_batch, rew_batch, next_batch, terminal_batch, belief_distributions)
+                # _, _, immediate_q = self.policy.target(next_batch)
+                # # immediate_q = immediate_q.long()
+                # beta_t = min(self.beta_t + self.beta_step, self.beta_max)
+                # self.beta_t = beta_t
+                # belief_distributions = self.cluster_tool.compute_belief_distribution(next_batch, beta_t, immediate_q,
+                #                                                                     self.k)
+
+
+                # # Clipped Softmax信念分布
+                # _, _, immediate_q = self.policy.target(next_batch)
+                # beta_t = min(self.beta_t + self.beta_step, self.beta_max)
+                # self.beta_t = beta_t
+                # immediate_q = immediate_q.long()
+                # belief_distributions = clipped_softmax(immediate_q, self.k)
+                # belief_distributions = torch.tensor(belief_distributions, device=self.device).float()
+
+                step_info = self.learner.update(obs_batch, act_batch, rew_batch, next_batch, terminal_batch, self.k, self.state_categorizer)
                 step_info["epsilon-greedy"] = self.egreedy
                 self.log_infos(step_info, self.current_step)
 

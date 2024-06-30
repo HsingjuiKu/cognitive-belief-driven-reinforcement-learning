@@ -1,4 +1,16 @@
 from xuance.torchAgent.learners import *
+import numpy as np
+import torch
+from xuance.state_categorizer import StateCategorizer
+
+def clipped_softmax(x, beta, k):
+    topk_indices = torch.topk(x, k=k, dim=1).indices
+    clipped_x = torch.full_like(x, float('-inf'))
+    for i, indices in enumerate(topk_indices):
+        clipped_x[i, indices] = x[i, indices]
+    e_x = torch.exp(beta * clipped_x - torch.max(beta * clipped_x, dim=1, keepdim=True).values)
+    return e_x / e_x.sum(dim=1, keepdim=True)
+
 
 class CBDDQN_Learner(Learner):
     def __init__(self,
@@ -13,20 +25,36 @@ class CBDDQN_Learner(Learner):
         self.sync_frequency = sync_frequency
         super(CBDDQN_Learner, self).__init__(policy, optimizer, scheduler, device, model_dir)
 
-    def update(self, obs_batch, act_batch, rew_batch, next_batch, terminal_batch, belief_distributions):
+    def update(self, obs_batch, act_batch, rew_batch, next_batch, terminal_batch, k, state_categorizer):
         self.iterations += 1
-        act_batch = torch.as_tensor(act_batch, device=self.device)
-        rew_batch = torch.as_tensor(rew_batch, device=self.device)
-        ter_batch = torch.as_tensor(terminal_batch, device=self.device)
+
+        # obs_batch = torch.tensor(obs_batch, device=self.device).float()
+        # act_batch = torch.tensor(act_batch, device=self.device).long()
+        # rew_batch = torch.tensor(rew_batch, device=self.device).float()
+        # terminal_batch = torch.tensor(terminal_batch, device=self.device).float()
+        # next_batch = torch.tensor(next_batch, device=self.device).float()
+
+        beta = min(0.1 + 0.0001 * self.iterations, 10.0)
+        beta_dynamic = min(0.0 + 0.00001 * self.iterations, 0.5)
+
+        obs_batch = torch.tensor(obs_batch, device=self.device)
+        act_batch = torch.tensor(act_batch, device=self.device)
+        rew_batch = torch.tensor(rew_batch, device=self.device)
+        ter_batch = torch.tensor(terminal_batch, device=self.device)
+        next_batch = torch.tensor(next_batch, device=self.device)
 
         _, _, evalQ = self.policy(obs_batch)
         _, _, targetQ = self.policy.target(next_batch)
 
-        # 使用信念概率分布计算目标Q值
-        belief_distributions = torch.tensor(belief_distributions, device=self.device)
+        prior_probs = np.array(
+            [state_categorizer.get_action_prob(next_batch[i].cpu().numpy()) for i in range(len(next_batch))])
+        prior_probs = torch.tensor(prior_probs, device=self.device).float()
+        clipped_dist = clipped_softmax(targetQ, beta, k)
+        belief_distributions = beta_dynamic * prior_probs + (1 - beta_dynamic) * clipped_dist
+
         targetQ = (targetQ * belief_distributions).sum(dim=-1)
         targetQ = rew_batch + self.gamma * (1 - ter_batch) * targetQ
-        predictQ = (evalQ * F.one_hot(act_batch.long(), evalQ.shape[1])).sum(dim=-1)
+        predictQ = (evalQ * F.one_hot(act_batch.long(), evalQ.shape[1]).float()).sum(dim=-1)
 
         loss = F.mse_loss(predictQ, targetQ)
         self.optimizer.zero_grad()
@@ -34,8 +62,6 @@ class CBDDQN_Learner(Learner):
         self.optimizer.step()
         if self.scheduler is not None:
             self.scheduler.step()
-
-        # 硬更新目标网络
         if self.iterations % self.sync_frequency == 0:
             self.policy.copy_target()
         lr = self.optimizer.state_dict()['param_groups'][0]['lr']

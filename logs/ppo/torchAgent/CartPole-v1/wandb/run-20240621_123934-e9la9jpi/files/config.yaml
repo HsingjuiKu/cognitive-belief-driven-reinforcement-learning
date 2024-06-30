@@ -1,0 +1,193 @@
+wandb_version: 1
+
+dl_toolbox:
+  desc: null
+  value: torchAgent
+project_name:
+  desc: null
+  value: XuanCe_Benchmark
+logger:
+  desc: null
+  value: wandb
+wandb_user_name:
+  desc: null
+  value: guanrenqiao
+WANDB_API_KEY:
+  desc: null
+  value: bfbb0793d34895ac010fe593f416a16d414995d2
+parallels:
+  desc: null
+  value: 10
+seed:
+  desc: null
+  value: 1
+render:
+  desc: null
+  value: true
+render_mode:
+  desc: null
+  value: rgb_array
+fps:
+  desc: null
+  value: 50
+test_mode:
+  desc: null
+  value: false
+test_steps:
+  desc: null
+  value: 10000
+device:
+  desc: null
+  value: cuda:0
+agent:
+  desc: null
+  value: PPO_Clip
+env_name:
+  desc: null
+  value: Classic Control
+env_id:
+  desc: null
+  value: CartPole-v1
+vectorize:
+  desc: null
+  value: Dummy_Gym
+representation:
+  desc: null
+  value: Basic_MLP
+policy:
+  desc: null
+  value: Categorical_AC
+runner:
+  desc: null
+  value: DRL
+representation_hidden_size:
+  desc: null
+  value:
+  - 128
+actor_hidden_size:
+  desc: null
+  value:
+  - 128
+critic_hidden_size:
+  desc: null
+  value:
+  - 128
+activation:
+  desc: null
+  value: leaky_relu
+running_steps:
+  desc: null
+  value: 120000
+horizon_size:
+  desc: null
+  value: 256
+n_epoch:
+  desc: null
+  value: 8
+n_minibatch:
+  desc: null
+  value: 8
+learning_rate:
+  desc: null
+  value: 0.0004
+use_grad_clip:
+  desc: null
+  value: true
+vf_coef:
+  desc: null
+  value: 0.25
+ent_coef:
+  desc: null
+  value: 0.01
+target_kl:
+  desc: null
+  value: 0.001
+clip_range:
+  desc: null
+  value: 0.2
+clip_grad_norm:
+  desc: null
+  value: 0.5
+gamma:
+  desc: null
+  value: 0.98
+use_gae:
+  desc: null
+  value: true
+gae_lambda:
+  desc: null
+  value: 0.95
+use_advnorm:
+  desc: null
+  value: true
+use_obsnorm:
+  desc: null
+  value: true
+use_rewnorm:
+  desc: null
+  value: true
+obsnorm_range:
+  desc: null
+  value: 5
+rewnorm_range:
+  desc: null
+  value: 5
+eval_interval:
+  desc: null
+  value: 50000
+test_episode:
+  desc: null
+  value: 3
+log_dir:
+  desc: null
+  value: ./logs/ppo/torchAgent/CartPole-v1
+model_dir:
+  desc: null
+  value: C:\Users\Tian\Desktop\gxr\cognitive-belief-driven-qlearning\cognitive-belief-driven-qlearning\./models/ppo/torchAgent\CartPole-v1
+method:
+  desc: null
+  value: ppo
+env:
+  desc: null
+  value: classic_control
+test:
+  desc: null
+  value: 0
+agent_name:
+  desc: null
+  value: ppo
+observation_space:
+  desc: null
+  value: Box([-4.8000002e+00 -3.4028235e+38 -4.1887903e-01 -3.4028235e+38], [4.8000002e+00
+    3.4028235e+38 4.1887903e-01 3.4028235e+38], (4,), float32)
+action_space:
+  desc: null
+  value: Discrete(2)
+_wandb:
+  desc: null
+  value:
+    python_version: 3.7.16
+    cli_version: 0.17.1
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1718944774
+    t:
+      1:
+      - 1
+      - 55
+      2:
+      - 1
+      - 55
+      3:
+      - 2
+      - 13
+      - 16
+      - 23
+      - 61
+      4: 3.7.16
+      5: 0.17.1
+      8:
+      - 3
+      - 5
+      13: windows-amd64

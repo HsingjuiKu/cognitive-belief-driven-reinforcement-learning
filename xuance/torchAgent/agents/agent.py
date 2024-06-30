@@ -74,7 +74,7 @@ class Agent(ABC):
                        job_type=config.agent,
                        name=time_string,
                        reinit=True,
-                       settings=wandb.Settings(start_method="fork")
+                       settings=wandb.Settings(start_method="spawn")
                        )
             # os.environ["WANDB_SILENT"] = "True"
             self.use_wandb = True

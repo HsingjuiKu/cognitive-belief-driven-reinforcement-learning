@@ -1,18 +1,19 @@
 dl_toolbox: "torchAgent"  # The deep learning toolbox. Choices: "torchAgent", "mindspore", "tensorflow"
 
 project_name: "XuanCe_Benchmark"
-logger: "tensorboard"  # Choices: "tensorboard", "wandb".
-wandb_user_name: "your_user_name"
+# logger: "wandb"  # Choices: "tensorboard", "wandb".
+logger: "tensorboard"
+wandb_user_name: "guanrenqiao"
 
 parallels: 10
-seed: 2910
+seed: 666
 render: True
 render_mode: 'rgb_array' # Choices: 'human', 'rgb_array'.
 fps: 50
 test_mode: False
 test_steps: 2000
 
-device: "cpu"
+device: "cuda:0"
 
 # PyTorch: "cpu", "cuda:0";
 # TensorFlow: "cpu"/"CPU", "gpu"/"GPU";

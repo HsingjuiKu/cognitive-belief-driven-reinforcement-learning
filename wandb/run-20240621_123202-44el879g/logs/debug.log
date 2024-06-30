@@ -1,0 +1,27 @@
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_setup.py:_flush():76] Current SDK version is 0.17.1
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_setup.py:_flush():76] Configure stats pid to 22628
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_setup.py:_flush():76] Loading settings from C:\Users\Tian\.config\wandb\settings
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_setup.py:_flush():76] Loading settings from C:\Users\Tian\Desktop\gxr\cognitive-belief-driven-qlearning\cognitive-belief-driven-qlearning\wandb\settings
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'demo.py', 'program_abspath': 'C:\\Users\\Tian\\Desktop\\gxr\\cognitive-belief-driven-qlearning\\cognitive-belief-driven-qlearning\\demo.py', 'program': 'demo.py'}
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_init.py:_log_setup():520] Logging user logs to C:\Users\Tian\Desktop\gxr\cognitive-belief-driven-qlearning\cognitive-belief-driven-qlearning\wandb\run-20240621_123202-44el879g\logs\debug.log
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_init.py:_log_setup():521] Logging internal logs to C:\Users\Tian\Desktop\gxr\cognitive-belief-driven-qlearning\cognitive-belief-driven-qlearning\wandb\run-20240621_123202-44el879g\logs\debug-internal.log
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_init.py:init():560] calling init triggers
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_init.py:init():568] wandb.init called with sweep_config: {}
+config: {}
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_init.py:init():610] starting backend
+2024-06-21 12:32:02,351 INFO    MainThread:22628 [wandb_init.py:init():614] setting up manager
+2024-06-21 12:32:02,355 INFO    MainThread:22628 [wandb_init.py:init():622] backend started and connected
+2024-06-21 12:32:02,360 INFO    MainThread:22628 [wandb_init.py:init():711] updated telemetry
+2024-06-21 12:32:02,361 INFO    MainThread:22628 [wandb_init.py:init():744] communicating run to backend with 90.0 second timeout
+2024-06-21 12:32:02,976 ERROR   MainThread:22628 [wandb_init.py:init():770] encountered error: It appears that you do not have permission to access the requested resource. Please reach out to the project owner to grant you access. If you have the correct permissions, verify that there are no issues with your networking setup.(Error 403: Forbidden)
+2024-06-21 12:32:02,976 ERROR   MainThread:22628 [wandb_init.py:init():1181] error in wandb.init()
+Traceback (most recent call last):
+  File "C:\Users\Tian\anaconda3\envs\cbdq\lib\site-packages\wandb\sdk\wandb_init.py", line 1171, in init
+    return wi.init()
+  File "C:\Users\Tian\anaconda3\envs\cbdq\lib\site-packages\wandb\sdk\wandb_init.py", line 776, in init
+    raise error
+wandb.errors.CommError: It appears that you do not have permission to access the requested resource. Please reach out to the project owner to grant you access. If you have the correct permissions, verify that there are no issues with your networking setup.(Error 403: Forbidden)
+2024-06-21 12:32:04,544 WARNING MsgRouterThr:22628 [router.py:message_loop():77] message_loop has been closed
