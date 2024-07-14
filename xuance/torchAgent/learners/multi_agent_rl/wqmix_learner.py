@@ -1,27 +1,33 @@
-"""
-Weighted QMIX
-Paper link:
-https://proceedings.neurips.cc/paper/2020/file/73a427badebe0e32caa2e1fc7530b7f3-Paper.pdf
-Implementation: Pytorch
-"""
 from xuance.torchAgent.learners import *
+import torch.nn as nn
+import torch.nn.functional as F
+import torch
+import sys
+import os
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from redistribute import EnhancedCausalModel
 
 class WQMIX_Learner(LearnerMAS):
     def __init__(self,
                  config: Namespace,
                  policy: nn.Module,
                  optimizer: torch.optim.Optimizer,
+                 env,
                  scheduler: Optional[torch.optim.lr_scheduler._LRScheduler] = None,
                  device: Optional[Union[int, str, torch.device]] = None,
                  model_dir: str = "./",
                  gamma: float = 0.99,
-                 sync_frequency: int = 100
-                 ):
+                 sync_frequency: int = 100):
         self.alpha = config.alpha
         self.gamma = gamma
         self.sync_frequency = sync_frequency
         self.mse_loss = nn.MSELoss()
+        self.act_shape = [space.n for space in env.action_space.values()]
+        self.act_shape = (self.act_shape[0],)
+        self.causal_model = EnhancedCausalModel(config.n_agents, config.obs_shape[0], self.act_shape[0], device)
+        self.n_iters = config.running_steps
+
         super(WQMIX_Learner, self).__init__(config, policy, optimizer, scheduler, device, model_dir)
 
     def update(self, sample):
@@ -36,6 +42,15 @@ class WQMIX_Learner(LearnerMAS):
         agent_mask = torch.Tensor(sample['agent_mask']).float().reshape(-1, self.n_agents, 1).to(self.device)
         batch_size = actions.shape[0]
         IDs = torch.eye(self.n_agents).unsqueeze(0).expand(self.args.batch_size, -1, -1).to(self.device)
+
+        # Convert actions to one-hot encoding
+        actions_one_hot = F.one_hot(actions.long(), num_classes=self.act_shape[0]).float()
+
+        # Calculate social contribution index and redistribute rewards
+        social_contribution_index = self.causal_model.calculate_social_contribution_index(obs, actions_one_hot)
+        tax_rates = self.causal_model.calculate_tax_rates(social_contribution_index)
+        alpha = 1.0 - (self.iterations / self.n_iters)
+        new_rewards = self.causal_model.redistribute_rewards(rewards, social_contribution_index, tax_rates, beta=0.5, alpha=alpha)
 
         # calculate Q_tot
         _, action_max, q_eval = self.policy(obs, IDs)
@@ -114,8 +129,16 @@ class WQMIX_Learner(LearnerMAS):
         filled = torch.Tensor(sample['filled']).float().to(self.device)
         batch_size = actions.shape[0]
         episode_length = actions.shape[2]
-        IDs = torch.eye(self.n_agents).unsqueeze(1).unsqueeze(0).expand(batch_size, -1, episode_length + 1, -1).to(
-            self.device)
+        IDs = torch.eye(self.n_agents).unsqueeze(1).unsqueeze(0).expand(batch_size, -1, episode_length + 1, -1).to(self.device)
+
+        # Convert actions to one-hot encoding
+        actions_one_hot = F.one_hot(actions.long(), num_classes=self.act_shape[0]).float()
+
+        # Calculate social contribution index and redistribute rewards
+        social_contribution_index = self.causal_model.calculate_social_contribution_index(obs, actions_one_hot)
+        tax_rates = self.causal_model.calculate_tax_rates(social_contribution_index)
+        alpha = 1.0 - (self.iterations / self.n_iters)
+        new_rewards = self.causal_model.redistribute_rewards(rewards, social_contribution_index, tax_rates, beta=0.5, alpha=alpha)
 
         # calculate Q_tot
         rnn_hidden = self.policy.representation.init_hidden(batch_size * self.n_agents)
@@ -152,8 +175,7 @@ class WQMIX_Learner(LearnerMAS):
         q_eval_next_centralized = self.policy.target_q_centralized(obs.reshape(-1, episode_length + 1, self.dim_obs),
                                                                    IDs.reshape(-1, episode_length + 1, self.n_agents),
                                                                    *target_rnn_hidden)
-        q_eval_next_centralized = q_eval_next_centralized[:, 1:].reshape(batch_size, self.n_agents, episode_length,
-                                                                      self.dim_act)
+        q_eval_next_centralized = q_eval_next_centralized[:, 1:].reshape(batch_size, self.n_agents, episode_length, self.dim_act)
         q_eval_next_centralized_a = q_eval_next_centralized.gather(-1, action_next_greedy)
         q_eval_next_centralized_a = q_eval_next_centralized_a.transpose(1, 2).reshape(-1, self.n_agents, 1)
         q_tot_next_centralized = self.policy.target_q_feedforward(q_eval_next_centralized_a, state[:, 1:])

@@ -51,7 +51,7 @@ class QMIX_Agents(MARLAgents):
                         config.done_shape, envs.num_envs, config.buffer_size, config.batch_size)
         memory = buffer(*input_buffer, max_episode_length=envs.max_episode_length, dim_act=config.dim_act)
 
-        learner = QMIX_Learner(config, policy, optimizer, scheduler,
+        learner = QMIX_Learner(config, policy, optimizer, envs, scheduler,
                                config.device, config.model_dir, config.gamma,
                                config.sync_frequency)
         super(QMIX_Agents, self).__init__(config, envs, policy, memory, learner, device,

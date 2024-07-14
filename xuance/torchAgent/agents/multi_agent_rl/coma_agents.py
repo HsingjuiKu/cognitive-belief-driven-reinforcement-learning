@@ -68,7 +68,7 @@ class COMA_Agents(MARLAgents):
         self.buffer_size = memory.buffer_size
         self.batch_size = self.buffer_size // self.n_minibatch
 
-        learner = COMA_Learner(config, policy, optimizer, scheduler,
+        learner = COMA_Learner(config, policy, optimizer, envs, scheduler,
                                config.device, config.model_dir, config.gamma, config.sync_frequency)
 
         super(COMA_Agents, self).__init__(config, envs, policy, memory, learner, device,

@@ -49,8 +49,9 @@ class IQL_Agents(MARLAgents):
                         config.done_shape, envs.num_envs, config.buffer_size, config.batch_size)
         memory = buffer(*input_buffer, max_episode_length=envs.max_episode_length, dim_act=config.dim_act)
 
-        learner = IQL_Learner(config, policy, optimizer, scheduler, config.device, config.model_dir, config.gamma,
+        learner = IQL_Learner(config, policy, optimizer, envs,  scheduler, config.device, config.model_dir, config.gamma,
                               config.sync_frequency)
+
         super(IQL_Agents, self).__init__(config, envs, policy, memory, learner, device,
                                          config.log_dir, config.model_dir)
         self.on_policy = False

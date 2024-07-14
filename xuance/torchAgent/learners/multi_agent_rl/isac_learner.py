@@ -1,9 +1,11 @@
-"""
-Independent Soft Actor-critic (ISAC)
-Implementation: Pytorch
-"""
 from xuance.torchAgent.learners import *
-
+import torch.nn as nn
+import torch.nn.functional as F
+import torch
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from redistribute import EnhancedCausalModel
 
 class ISAC_Learner(LearnerMAS):
     def __init__(self,
@@ -33,6 +35,9 @@ class ISAC_Learner(LearnerMAS):
             self.log_alpha = nn.Parameter(torch.zeros(1, requires_grad=True, device=device))
             self.alpha = self.log_alpha.exp()
             self.alpha_optimizer = torch.optim.Adam([self.log_alpha], lr=kwargs['lr_policy'])
+        
+        self.causal_model = EnhancedCausalModel(config.n_agents, config.obs_shape[0], config.act_shape[0], device)
+        self.n_iters = config.running_steps
 
     def update(self, sample):
         self.iterations += 1
@@ -43,6 +48,12 @@ class ISAC_Learner(LearnerMAS):
         terminals = torch.Tensor(sample['terminals']).float().reshape(-1, self.n_agents, 1).to(self.device)
         agent_mask = torch.Tensor(sample['agent_mask']).float().reshape(-1, self.n_agents, 1).to(self.device)
         IDs = torch.eye(self.n_agents).unsqueeze(0).expand(self.args.batch_size, -1, -1).to(self.device)
+
+        # 计算社交贡献指数和税率
+        social_contribution_index = self.causal_model.calculate_social_contribution_index(obs, actions)
+        tax_rates = self.causal_model.calculate_tax_rates(social_contribution_index)
+        alpha = 1.0 - (self.iterations / self.n_iters)
+        new_rewards = self.causal_model.redistribute_rewards(rewards, social_contribution_index, tax_rates, beta=0.5, alpha=alpha)
 
         # actor update
         log_pi, policy_q_1, policy_q_2 = self.policy.Qpolicy(obs, IDs)
@@ -61,7 +72,7 @@ class ISAC_Learner(LearnerMAS):
         log_pi_next, target_q = self.policy.Qtarget(obs_next, IDs)
         log_pi_next = log_pi_next.reshape([-1, self.n_agents, 1])
         target_value = target_q - self.alpha * log_pi_next
-        backup = rewards + (1 - terminals) * self.gamma * target_value
+        backup = new_rewards + (1 - terminals) * self.gamma * target_value
         td_error_1, td_error_2 = action_q_1 - backup.detach(), action_q_2 - backup.detach()
         td_error_1 *= agent_mask
         td_error_2 *= agent_mask

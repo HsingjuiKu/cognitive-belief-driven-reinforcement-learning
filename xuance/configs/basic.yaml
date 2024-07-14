@@ -2,7 +2,7 @@ dl_toolbox: "torchAgent"  # The deep learning toolbox. Choices: "torchAgent", "m
 
 project_name: "XuanCe_Benchmark"
 # logger: "wandb"  # Choices: "tensorboard", "wandb".
-logger: "wandb"
+logger: "tensorboard"
 wandb_user_name: "guanrenqiao"
 
 parallels: 10

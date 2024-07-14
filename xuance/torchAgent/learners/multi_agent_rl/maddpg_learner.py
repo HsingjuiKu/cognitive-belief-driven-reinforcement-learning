@@ -6,6 +6,13 @@ Implementation: Pytorch
 Trick: Parameter sharing for all agents, with agents' one-hot IDs as actor-critic's inputs.
 """
 from xuance.torchAgent.learners import *
+import torch.nn as nn
+import torch.nn.functional as F
+import torch
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from redistribute import EnhancedCausalModel
 
 
 class MADDPG_Learner(LearnerMAS):
@@ -32,6 +39,8 @@ class MADDPG_Learner(LearnerMAS):
             'actor': scheduler[0],
             'critic': scheduler[1]
         }
+        self.causal_model = EnhancedCausalModel(config.n_agents, config.obs_shape[0], config.act_shape[0],device)
+        self.n_iters = config.running_steps
 
     def update(self, sample):
         self.iterations += 1
@@ -43,7 +52,11 @@ class MADDPG_Learner(LearnerMAS):
         agent_mask = torch.Tensor(sample['agent_mask']).float().reshape(-1, self.n_agents, 1).to(self.device)
         IDs = torch.eye(self.n_agents).unsqueeze(0).expand(self.args.batch_size, -1, -1).to(self.device)
 
-        # train actor
+
+        # Calculate alpha which decays from 1 to 0 over iterations
+        alpha = 1.0 - (self.iterations / self.n_iters)
+
+        # Train actor
         _, actions_eval = self.policy(obs, IDs)
         loss_a = -(self.policy.Qpolicy(obs, actions_eval, IDs) * agent_mask).sum() / agent_mask.sum()
         self.optimizer['actor'].zero_grad()
@@ -54,11 +67,17 @@ class MADDPG_Learner(LearnerMAS):
         if self.scheduler['actor'] is not None:
             self.scheduler['actor'].step()
 
-        # train critic
+        # Train critic
         actions_next = self.policy.Atarget(obs_next, IDs)
         q_eval = self.policy.Qpolicy(obs, actions, IDs)
         q_next = self.policy.Qtarget(obs_next, actions_next, IDs)
-        q_target = rewards + (1 - terminals) * self.args.gamma * q_next
+
+        # Calculate new rewards
+        social_contribution_index = self.causal_model.calculate_social_contribution_index(obs, actions)
+        tax_rates = self.causal_model.calculate_tax_rates(social_contribution_index)
+        new_rewards = self.causal_model.redistribute_rewards(rewards, social_contribution_index, tax_rates, beta=0.5, alpha=alpha)
+
+        q_target = new_rewards + (1 - terminals) * self.gamma * q_next
         td_error = (q_eval - q_target.detach()) * agent_mask
         loss_c = (td_error ** 2).sum() / agent_mask.sum()
         self.optimizer['critic'].zero_grad()
