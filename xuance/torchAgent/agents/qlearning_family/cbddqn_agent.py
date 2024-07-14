@@ -273,7 +273,7 @@ class CBDDQN_Agent(Agent):
 
             # 更新动作选择频率
             for o, a in zip(obs, acts):
-                self.state_categorizer.add_to_replay_buffer(o, 10000)
+                self.state_categorizer.add_to_replay_buffer(o, 100000)
                 # 初始化簇族后再更新动作频率
                 if self.state_categorizer.initialized:
                     self.state_categorizer.update_action_counts(o, a)
