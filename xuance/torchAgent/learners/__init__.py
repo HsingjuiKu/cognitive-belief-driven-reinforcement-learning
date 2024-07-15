@@ -32,7 +32,7 @@ from .qlearning_family import (
     QRDQN_Learner,
     DRQN_Learner,
     CBDDQN_Learner,
-    DoubleGum_Learner
+    # DoubleGum_Learner
 )
 
 from .multi_agent_rl import (
