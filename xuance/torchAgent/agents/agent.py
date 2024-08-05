@@ -72,9 +72,9 @@ class Agent(ABC):
                        dir=wandb_dir,
                        group=config.env_id,
                        job_type=config.agent,
-                       name=time_string,
+                       name=config.agent+'_atari_'+self.config.env_id+seed+time_string,
                        reinit=True,
-                       settings=wandb.Settings(start_method="spawn")
+                       settings=wandb.Settings(start_method="fork")
                        )
             # os.environ["WANDB_SILENT"] = "True"
             self.use_wandb = True

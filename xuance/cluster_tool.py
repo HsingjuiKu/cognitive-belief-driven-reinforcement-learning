@@ -1,40 +1,31 @@
+# cluster_tool.py
 import numpy as np
-import torch
-from kmeans_pytorch import kmeans
+from sklearn.cluster import KMeans
+
+def clipped_softmax(logits, k):
+    sorted_logits = np.sort(logits)[::-1]
+    threshold = sorted_logits[k - 1] if k < len(logits) else sorted_logits[-1]
+    clipped_logits = np.clip(logits - threshold, a_min=0, a_max=None)
+    exp_logits = np.exp(clipped_logits)
+    return exp_logits / exp_logits.sum()
 
 class ClusterTool:
-    def __init__(self, state_space, action_space, n_clusters, device='cpu'):
+    def __init__(self, state_space, action_space, n_clusters):
         self.state_space = state_space
         self.action_space = action_space
         self.n_clusters = n_clusters
-        self.device = torch.device(device)
 
-        # 转换为torch张量并移动到指定设备
-        state_space_tensor = torch.from_numpy(state_space.astype(np.float32)).to(self.device)
+        # 使用KMeans对状态空间进行聚类
+        self.kmeans = KMeans(n_clusters=n_clusters, random_state=0)
+        self.state_clusters = self.kmeans.fit_predict(state_space)
 
-        # 使用kmeans_pytorch进行聚类
-        self.cluster_ids_x, self.cluster_centers = kmeans(
-            X=state_space_tensor, num_clusters=n_clusters, distance='euclidean', device=self.device
-        )
-
-        # 将聚类结果转换为numpy数组
-        self.state_clusters = self.cluster_ids_x.cpu().numpy()
+        # 初始化动作选择频率
         self.action_counts = {k: {a: 0 for a in range(action_space)} for k in range(n_clusters)}
 
     def get_cluster(self, state):
         # 获取状态对应的簇
-        if isinstance(state, torch.Tensor):
-            state_tensor = state.float().to(self.device)
-        else:
-            state_tensor = torch.from_numpy(state.reshape(-1, state.shape[-1]).astype(np.float32)).to(self.device)
-
-        # 确保state_tensor是2D的
-        if state_tensor.dim() == 1:
-            state_tensor = state_tensor.unsqueeze(0)
-
-        # 计算距离
-        dists = torch.cdist(state_tensor, self.cluster_centers)
-        cluster = torch.argmin(dists, dim=1).item()
+        tmp = state.reshape(-1, 84)
+        cluster = self.kmeans.predict(np.array(tmp, dtype=np.float64))[0]
         return cluster
 
     def update_action_counts(self, state, action):
@@ -50,7 +41,9 @@ class ClusterTool:
             return 0
         return self.action_counts[cluster][action] / total_actions
 
-    def compute_belief_distribution(self, state):
-        # 返回当前状态所属簇的动作概率分布
+    def compute_belief_distribution(self, state, beta_t, immediate_belief, k):
+        # 计算综合概率分布 b_t(a | s_{t+1})，并应用Clipped Softmax
         prior_probs = np.array([self.get_action_prob(state, a) for a in range(self.action_space)])
-        return prior_probs
+        immediate_belief = clipped_softmax(immediate_belief, k)
+        comprehensive_prob = beta_t * prior_probs + (1 - beta_t) * immediate_belief
+        return comprehensive_prob

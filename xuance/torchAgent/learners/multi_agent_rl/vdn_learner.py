@@ -1,11 +1,10 @@
+"""
+Value Decomposition Networks (VDN)
+Paper link:
+https://arxiv.org/pdf/1706.05296.pdf
+Implementation: Pytorch
+"""
 from xuance.torchAgent.learners import *
-import torch.nn as nn
-import torch.nn.functional as F
-import torch
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from redistribute import EnhancedCausalModel
 
 
 class VDN_Learner(LearnerMAS):
@@ -13,7 +12,6 @@ class VDN_Learner(LearnerMAS):
                  config: Namespace,
                  policy: nn.Module,
                  optimizer: torch.optim.Optimizer,
-                 env,
                  scheduler: Optional[torch.optim.lr_scheduler._LRScheduler] = None,
                  device: Optional[Union[int, str, torch.device]] = None,
                  model_dir: str = "./",
@@ -26,11 +24,6 @@ class VDN_Learner(LearnerMAS):
         self.mse_loss = nn.MSELoss()
         super(VDN_Learner, self).__init__(config, policy, optimizer, scheduler, device, model_dir)
 
-        self.act_shape = [space.n for space in env.action_space.values()]
-        self.act_shape = (self.act_shape[0],)
-        self.causal_model = EnhancedCausalModel(config.n_agents, config.obs_shape[0], self.act_shape[0], device)
-        self.n_iters = config.running_steps
-
     def update(self, sample):
         self.iterations += 1
         obs = torch.Tensor(sample['obs']).to(self.device)
@@ -40,13 +33,6 @@ class VDN_Learner(LearnerMAS):
         terminals = torch.Tensor(sample['terminals']).all(dim=1, keepdims=True).float().to(self.device)
         agent_mask = torch.Tensor(sample['agent_mask']).float().reshape(-1, self.n_agents, 1).to(self.device)
         IDs = torch.eye(self.n_agents).unsqueeze(0).expand(self.args.batch_size, -1, -1).to(self.device)
-
-        # 计算社交贡献指数和税率
-        actions_one_hot = F.one_hot(actions.long(), num_classes=self.act_shape[0]).float()
-        social_contribution_index = self.causal_model.calculate_social_contribution_index(obs, actions_one_hot)
-        tax_rates = self.causal_model.calculate_tax_rates(social_contribution_index)
-        alpha = 1.0 - (self.iterations / self.n_iters)
-        new_rewards = self.causal_model.redistribute_rewards(rewards, social_contribution_index, tax_rates, beta=0.5, alpha=alpha)
 
         _, _, q_eval = self.policy(obs, IDs)
         q_eval_a = q_eval.gather(-1, actions.long().reshape([self.args.batch_size, self.n_agents, 1]))
@@ -58,7 +44,7 @@ class VDN_Learner(LearnerMAS):
         else:
             q_next_a = q_next.max(dim=-1, keepdim=True).values
         q_tot_next = self.policy.target_Q_tot(q_next_a * agent_mask)
-        q_tot_target = new_rewards + (1 - terminals) * self.args.gamma * q_tot_next
+        q_tot_target = rewards + (1 - terminals) * self.args.gamma * q_tot_next
 
         # calculate the loss function
         loss = self.mse_loss(q_tot_eval, q_tot_target.detach())
@@ -96,14 +82,8 @@ class VDN_Learner(LearnerMAS):
         filled = torch.Tensor(sample['filled']).float().to(self.device)
         batch_size = actions.shape[0]
         episode_length = actions.shape[2]
-        IDs = torch.eye(self.n_agents).unsqueeze(1).unsqueeze(0).expand(batch_size, -1, episode_length + 1, -1).to(self.device)
-
-        # 计算社交贡献指数和税率
-        actions_one_hot = F.one_hot(actions.long(), num_classes=self.act_shape[0]).float()
-        social_contribution_index = self.causal_model.calculate_social_contribution_index(obs, actions_one_hot)
-        tax_rates = self.causal_model.calculate_tax_rates(social_contribution_index)
-        alpha = 1.0 - (self.iterations / self.n_iters)
-        new_rewards = self.causal_model.redistribute_rewards(rewards, social_contribution_index, tax_rates, beta=0.5, alpha=alpha)
+        IDs = torch.eye(self.n_agents).unsqueeze(1).unsqueeze(0).expand(batch_size, -1, episode_length + 1, -1).to(
+            self.device)
 
         # Current Q
         rnn_hidden = self.policy.representation.init_hidden(batch_size * self.n_agents)
@@ -132,8 +112,8 @@ class VDN_Learner(LearnerMAS):
             q_next_a = q_next.max(dim=-1, keepdim=True).values
 
         q_tot_next = self.policy.target_Q_tot(q_next_a) * filled
-        new_rewards *= filled
-        q_tot_target = new_rewards + (1 - terminals) * self.args.gamma * q_tot_next
+        rewards *= filled
+        q_tot_target = rewards + (1 - terminals) * self.args.gamma * q_tot_next
 
         # calculate the loss function
         td_errors = q_tot_eval - q_tot_target.detach()

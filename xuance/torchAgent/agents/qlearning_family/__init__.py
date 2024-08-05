@@ -7,4 +7,3 @@ from .perdqn_agent import PerDQN_Agent
 from .qrdqn_agent import QRDQN_Agent
 from .drqn_agent import DRQN_Agent
 from .cbddqn_agent import CBDDQN_Agent
-# from .doublegumdqn_agent import DoubleGum_Agent

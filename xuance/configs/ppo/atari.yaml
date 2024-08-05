@@ -20,9 +20,9 @@ actor_hidden_size: []
 critic_hidden_size: []
 activation: "relu"
 
-seed: 1
+seed: 123
 parallels: 8
-running_steps: 10000000  # 10M
+running_steps: 30000000  # 10M
 horizon_size: 128  # the horizon size for an environment, buffer_size = horizon_size * parallels.
 n_epoch: 4
 n_minibatch: 4
