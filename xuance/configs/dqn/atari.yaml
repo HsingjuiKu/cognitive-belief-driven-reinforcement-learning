@@ -19,9 +19,9 @@ strides: [4, 2, 1]  # [2, 2, 2, 2]
 q_hidden_size: [512, ]
 activation: "relu"
 
-seed: 1069
-parallels: 10
-buffer_size: 50000
+seed: 321
+parallels: 5
+buffer_size: 500000
 batch_size: 32  # 64
 learning_rate: 0.0001
 gamma: 0.99
@@ -31,7 +31,7 @@ end_greedy: 0.05
 decay_step_greedy: 1000000  # 1M
 sync_frequency: 500
 training_frequency: 1
-running_steps: 10000000  # 10M
+running_steps: 50000000  # 10M
 start_training: 10000
 
 use_obsnorm: False

@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3d2e85a-c833-4e32-af10-d1046cb66406" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/ddqn/atari.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ddqn/atari.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="d3d2e85a-c833-4e32-af10-d1046cb66406" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +46,7 @@
       <option name="presentableId" value="Default" />
       <updated>1722870268962</updated>
       <workItem from="1722870270009" duration="1586000" />
-      <workItem from="1722935916244" duration="586000" />
+      <workItem from="1722935916244" duration="677000" />
     </task>
     <servers />
   </component>
