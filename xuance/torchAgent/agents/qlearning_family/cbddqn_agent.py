@@ -386,6 +386,8 @@ class CBDDQN_Agent(Agent):
         self.beta_step = 0
         self.k = config.k
 
+        self.policy2 = policy
+
         self.observation_space = envs.observation_space
         self.action_space = envs.action_space
         self.auxiliary_info_shape = {}
@@ -418,17 +420,14 @@ class CBDDQN_Agent(Agent):
         self.generate_initial_states()
 
     def generate_initial_states(self):
-        model_path = "models/dqn/torchAgent/CartPole-v1/seed_1_2024_0621_125320/final_train_model.pth"
-        self.policy.load_state_dict(torch.load(model_path, map_location=self.device))
-        self.policy.eval()
+        model_path = "xuance/torchAgent/agents/qlearning_family/best_model.pth"
+        self.policy2.load_state_dict(torch.load(model_path, map_location=self.device))
+        self.policy2.eval()
         obs = self.envs.reset()
         for _ in tqdm(range(10000)):
             with torch.no_grad():
-                obs_tensor = torch.tensor(obs[0], device=self.device).float()  # 只取环境返回的第一个元素
-                _, action, _ = self.policy(obs_tensor)
+                _, action, _ = self.policy2(obs[0])  # 直接使用原始的obs[0]
                 action = action.cpu().numpy()
-
-                # actions = [action] * self.n_envs
 
                 if action.ndim == 0:
                     actions = [int(action)] * self.n_envs
