@@ -39,8 +39,8 @@ use_rewnorm: False
 obsnorm_range: 5
 rewnorm_range: 5
 
-k: 3
-n_clusters: 5
+k: 4
+n_clusters: 10
 beta_max: 0.5
 
 test_steps: 10000
