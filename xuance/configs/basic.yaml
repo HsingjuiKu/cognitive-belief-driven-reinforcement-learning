@@ -1,9 +1,10 @@
 dl_toolbox: "torchAgent"  # The deep learning toolbox. Choices: "torchAgent", "mindspore", "tensorflow"
 
 project_name: "XuanCe_Benchmark"
-#logger: "wandb"  # Choices: "tensorboard", "wandb".
-logger: "tensorboard"
-wandb_user_name: "guanrenqiao"
+logger: "wandb"  # Choices: "tensorboard", "wandb".
+# logger: "tensorboard"
+# wandb_user_name: "guanrenqiao"
+wandb_user_name : "hsingjui-ku"
 
 parallels: 10
 seed: 2910

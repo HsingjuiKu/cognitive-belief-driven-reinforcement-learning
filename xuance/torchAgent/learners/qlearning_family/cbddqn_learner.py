@@ -116,8 +116,8 @@ class CBDDQN_Learner(Learner):
         next_batch = torch.tensor(next_batch, device=self.device)
 
         if state_categorizer.initialized:
-            # beta_dynamic = min(0.5 + 0.00001 * times, 1)
-            beta_dynamic = 1
+            beta_dynamic = min(0 + 1/30000000 * times, 1)
+            # beta_dynamic = 1
             # prior_probs = np.array(
             #     [state_categorizer.get_action_prob(next_batch[i].cpu().numpy()) for i in range(len(next_batch))])
             # prior_probs = torch.tensor(prior_probs, device=self.device).float()

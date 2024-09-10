@@ -385,7 +385,6 @@ class CBDDQN_Agent(Agent):
         self.beta_max = config.beta_max
         self.beta_step = 0
         self.k = config.k
-
         self.policy2 = policy
 
         self.observation_space = envs.observation_space
@@ -419,8 +418,31 @@ class CBDDQN_Agent(Agent):
         # 预加载模型并生成状态
         self.generate_initial_states()
 
+    #     def generate_initial_states(self):
+    #         model_path = "xuance/torchAgent/agents/qlearning_family/best_model.pth"
+    #         self.policy2.load_state_dict(torch.load(model_path, map_location=self.device))
+    #         self.policy2.eval()
+    #         obs = self.envs.reset()
+    #         for _ in tqdm(range(10000)):
+    #             with torch.no_grad():
+    #                 obs_tensor = torch.tensor(obs[0], device=self.device).float()  # 只取环境返回的第一个元素
+    #                 _, action, _ = self.policy2(obs_tensor)
+    #                 action = action.cpu().numpy()
+
+    #                 # actions = [action] * self.n_envs
+
+    #                 if action.ndim == 0:
+    #                     actions = [int(action)] * self.n_envs
+    #                 elif action.ndim == 1:
+    #                     actions = [int(a) for a in action]
+    #                 else:
+    #                     raise ValueError(f"Unexpected action shape: {action.shape}")
+    #                 next_obs, _, _, _, _ = self.envs.step(actions)
+    #                 self.state_categorizer.add_to_state_buffer(next_obs[0])  # 只取环境返回的第一个元素
+    #                 obs = next_obs
+
     def generate_initial_states(self):
-        model_path = "xuance/torchAgent/agents/qlearning_family/best_model.pth"
+        model_path = "/home/gxr/RL/cognitive-belief-driven-qlearning-main/models/dqn/torchAgent/ALE/Breakout-v5/seed_123_2024_0907_021609/final_train_model.pth"
         self.policy2.load_state_dict(torch.load(model_path, map_location=self.device))
         self.policy2.eval()
         obs = self.envs.reset()
@@ -435,9 +457,10 @@ class CBDDQN_Agent(Agent):
                     actions = [int(a) for a in action]
                 else:
                     raise ValueError(f"Unexpected action shape: {action.shape}")
+
                 next_obs, _, _, _, _ = self.envs.step(actions)
                 self.state_categorizer.add_to_state_buffer(next_obs[0])  # 只取环境返回的第一个元素
-                obs = next_obs
+                obs = np.expand_dims(next_obs, axis=0)
 
     def _action(self, obs, egreedy=0.0):
         _, argmax_action, _ = self.policy(obs)
