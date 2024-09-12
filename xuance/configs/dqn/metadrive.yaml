@@ -10,13 +10,13 @@ representation: "Basic_MLP"
 runner: "DRL"
 
 # representation_hidden_size: [512,]
-# actor_hidden_size: [512, 512]
-# critic_hidden_size: [512, 512]
-# activation: "leaky_relu"
-# activation_action: 'tanh'
+actor_hidden_size: [512, 512]
+critic_hidden_size: [512, 512]
+activation: "leaky_relu"
+activation_action: 'tanh'
 representation_hidden_size: [128,]
 q_hidden_size: [128,]
-activation: 'relu'
+# activation: 'relu'
 
 seed: 1
 parallels: 10
