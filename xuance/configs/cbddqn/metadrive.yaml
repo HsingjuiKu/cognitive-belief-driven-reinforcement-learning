@@ -1,11 +1,14 @@
-agent: "DQN"  # choice: PPO_Clip, PPO_KL
+
+agent: "CBDDQN"  # choice: PPO_Clip, PPO_KL
 env_name: "MetaDrive"
 env_id: "metadrive"
 env_config:  # the configs for MetaDrive environment
-  map: "C"  # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
+  map: "C" 
+  discrete_action: True
+  traffic_density: 0.05 # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
 render: False
 vectorize: "Subproc_MetaDrive"
-policy: "Categorical_AC"  # choice: Gaussian_AC for continuous actions, Categorical_AC for discrete actions.
+policy: "Basic_Q_network"  # choice: Gaussian_AC for continuous actions, Categorical_AC for discrete actions.
 representation: "Basic_MLP"
 runner: "DRL"
 
@@ -56,8 +59,12 @@ use_rewnorm: False
 obsnorm_range: 5
 rewnorm_range: 5
 
+k: 4
+n_clusters: 10
+beta_max: 0.5
+
 test_steps: 10000
 eval_interval: 20000
 test_episode: 5
-log_dir: "./logs/dqn/"
-model_dir: "./models/dqn/"
+log_dir: "./logs/cbddqn/"
+model_dir: "./models/cbddqn/"
