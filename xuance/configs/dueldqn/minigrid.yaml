@@ -1,0 +1,40 @@
+agent: "DQN"
+env_name: "MiniGrid"
+env_id: "BabyAI-GoToRedBall-v0"
+RGBImgPartialObsWrapper: False
+ImgObsWrapper: False
+vectorize: "Dummy_MiniGrid"
+policy: "Basic_Q_network"
+representation: "Basic_MLP"
+runner: "DRL"
+
+representation_hidden_size: [256,256]
+q_hidden_size: [256,256]
+activation: 'relu'
+
+
+seed: 123
+parallels: 10
+buffer_size: 500000
+batch_size: 512
+learning_rate: 0.0005
+gamma: 0.99
+
+
+start_greedy: 0.7
+end_greedy: 0.01
+decay_step_greedy: 20000
+sync_frequency: 100
+training_frequency: 1
+running_steps:  2000000  # 200k
+
+use_obsnorm: False
+use_rewnorm: False
+obsnorm_range: 5
+rewnorm_range: 5
+
+test_steps: 10000
+eval_interval: 1000
+test_episode: 5
+log_dir: "./logs/dueldqn/"
+model_dir: "./models/dueldqn/"
