@@ -1,4 +1,4 @@
-agent: "DQN"
+agent: "Duel_DQN"
 env_name: "MiniGrid"
 env_id: "BabyAI-GoToRedBall-v0"
 RGBImgPartialObsWrapper: False
