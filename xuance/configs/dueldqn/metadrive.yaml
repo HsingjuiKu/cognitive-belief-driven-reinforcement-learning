@@ -1,0 +1,46 @@
+agent: "Duel_DQN"
+env_name: "MetaDrive"
+env_id: "metadrive"
+env_config:  # the configs for MetaDrive environment
+  map: "XTOC"  # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
+  discrete_action: True
+  traffic_density: 0.8
+  num_scenarios: 1
+  accident_prob: 0.8
+  horizon: 3000
+  discrete_throttle_dim: 5
+  discrete_steering_dim: 5
+render: False
+vectorize: "Subproc_MetaDrive"
+policy: "Duel_Q_network"  # choice: Gaussian_AC for continuous actions, Categorical_AC for discrete actions.
+representation: "Basic_MLP"
+runner: "DRL"
+
+representation_hidden_size: [256, 256]  # MetaDrive 中，环境状态更复杂，增加隐藏层数量和大小
+q_hidden_size: [256, 256]  # 增加 Q 网络的隐藏层大小以适应环境复杂度
+activation: 'relu'  # ReLU 激活函数依然合适
+
+seed: 123
+parallels: 10
+buffer_size: 500000
+batch_size: 64
+learning_rate: 0.00025
+gamma: 0.99
+start_greedy: 1.0
+end_greedy: 0.01
+decay_step_greedy: 50000
+sync_frequency: 50
+training_frequency: 1
+start_training: 1000
+running_steps: 2000000
+use_obsnorm: False
+use_rewnorm: False
+obsnorm_range: 5
+rewnorm_range: 5
+
+
+test_steps: 10000
+eval_interval: 50000
+test_episode: 5
+log_dir: "./logs/dueldqn/"
+model_dir: "./models/dueldqn/"

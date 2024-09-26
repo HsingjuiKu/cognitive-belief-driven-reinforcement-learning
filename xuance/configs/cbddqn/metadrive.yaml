@@ -3,57 +3,39 @@ agent: "CBDDQN"  # choice: PPO_Clip, PPO_KL
 env_name: "MetaDrive"
 env_id: "metadrive"
 env_config:  # the configs for MetaDrive environment
-  map: "C" 
+  map: "XTOC"  # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
   discrete_action: True
-  traffic_density: 0.05 # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
+  traffic_density: 0.8
+  num_scenarios: 1
+  accident_prob: 0.8
+  horizon: 3000
+  discrete_throttle_dim: 5
+  discrete_steering_dim: 5
 render: False
 vectorize: "Subproc_MetaDrive"
-policy: "Basic_Q_network"  # choice: Gaussian_AC for continuous actions, Categorical_AC for discrete actions.
+policy: "Basic_Q_network"  
 representation: "Basic_MLP"
 runner: "DRL"
 
-# representation_hidden_size: [512,]
-# actor_hidden_size: [512, 512]
-# critic_hidden_size: [512, 512]
-# activation: "leaky_relu"
-# activation_action: 'tanh'
-representation_hidden_size: [128,]
-q_hidden_size: [128,]
-activation: 'relu'
+representation_hidden_size: [256, 256]  # MetaDrive 中，环境状态更复杂，增加隐藏层数量和大小
+q_hidden_size: [256, 256]  # 增加 Q 网络的隐藏层大小以适应环境复杂度
+activation: 'relu'  # ReLU 激活函数依然合适
 
-seed: 1
+
+seed: 123
 parallels: 10
-buffer_size: 100000
-batch_size: 256
-learning_rate: 0.001
+buffer_size: 500000
+batch_size: 64
+learning_rate: 0.00025
 gamma: 0.99
 
-start_greedy: 0.5
-end_greedy: 0.01
-decay_step_greedy: 10000
+start_greedy: 1.0 
+end_greedy: 0.01 
+decay_step_greedy: 50000
 sync_frequency: 50
 training_frequency: 1
-running_steps: 200000  # 200k
 start_training: 1000
-# running_steps: 500000
-
-# horizon_size: 128  # the horizon size for an environment, buffer_size = horizon_size * parallels.
-# n_epoch: 4
-# n_minibatch: 4
-# learning_rate: 0.00025
-
-# use_grad_clip: True
-
-# vf_coef: 0.25
-# ent_coef: 0.0
-# target_kl: 0.001  # for PPO_KL agent
-# clip_range: 0.2  # for PPO_Clip agent
-# clip_grad_norm: 0.5
-# gamma: 0.99
-# use_gae: True
-# gae_lambda: 0.95
-# use_advnorm: True
-
+running_steps: 2000000
 use_obsnorm: False
 use_rewnorm: False
 obsnorm_range: 5
