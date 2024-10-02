@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3d2e85a-c833-4e32-af10-d1046cb66406" name="Changes" comment="" />
+    <list default="true" id="d3d2e85a-c833-4e32-af10-d1046cb66406" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cbddqn/torchAgent/ALE/Breakout-v5/seed_123_2024_0908_153547/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0906_131703/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0906_132639/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0906_133442/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0906_134451/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cbddqn/torchAgent/CartPole-v1/seed_1_2024_0906_135336/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cbddqn/torchAgent/metadrive/seed_123_2024_0926_225637/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cbddqn/torchAgent/metadrive/seed_123_2024_0927_013013/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/ddqn/torchAgent/metadrive/seed_123_2024_0926_151327/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dqn/torchAgent/ALE/Breakout-v5/seed_123_2024_0907_021609/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dqn/torchAgent/CartPole-v1/seed_1_2024_0906_131118/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dqn/torchAgent/metadrive/seed_123_2024_0926_151313/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/dueldqn/torchAgent/metadrive/seed_123_2024_0926_151346/final_train_model.pth" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_cbddqn.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_cbddqn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/basic.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/basic.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/cbddqn/minigrid.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/cbddqn/minigrid.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/ddqn/metadrive.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ddqn/metadrive.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/dqn/metadrive.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/dqn/metadrive.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/dqn/minigrid.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/dqn/minigrid.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/dueldqn/metadrive.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/dueldqn/metadrive.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/ppo/metadrive.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ppo/metadrive.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/configs/ppo/minigrid.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ppo/minigrid.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/torchAgent/agents/qlearning_family/cbddqn_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/torchAgent/agents/qlearning_family/cbddqn_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xuance/torchAgent/learners/qlearning_family/cbddqn_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/torchAgent/learners/qlearning_family/cbddqn_learner.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,19 +50,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/gxr/RL/CBDDQN",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-0e3be3396995-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23339.19" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

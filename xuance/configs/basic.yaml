@@ -5,6 +5,7 @@ logger: "wandb"  # Choices: "tensorboard", "wandb".
 # logger: "tensorboard"
 # wandb_user_name: "guanrenqiao"
 wandb_user_name : "hsingjui-ku"
+# wandb_user_name : "cj2792-cc-past-love"
 
 parallels: 10
 seed: 2910

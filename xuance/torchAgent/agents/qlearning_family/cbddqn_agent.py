@@ -64,7 +64,7 @@ class CBDDQN_Agent(Agent):
         self.generate_initial_states()
 
     def generate_initial_states(self):
-        model_path = "models/cbddqn/torchAgent/metadrive/seed_123_2024_0926_225637/final_train_model.pth"
+        model_path = "models/dqn/torchAgent/metadrive/seed_123_2024_0930_161108/final_train_model.pth"
         self.policy2.load_state_dict(torch.load(model_path, map_location=self.device))
         self.policy2.eval()
         obs = self.envs.reset()

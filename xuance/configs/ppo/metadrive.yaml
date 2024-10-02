@@ -3,11 +3,11 @@ env_name: "MetaDrive"
 env_id: "metadrive"
 env_config:  # the configs for MetaDrive environment
 
-  map: "XTOC"  # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
+  map: "YOrSX"  # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
   discrete_action: True
-  traffic_density: 0.8
+  traffic_density: 0.1
   num_scenarios: 1
-  accident_prob: 0.8
+  accident_prob: 0.1
   horizon: 3000
   discrete_throttle_dim: 5
   discrete_steering_dim: 5

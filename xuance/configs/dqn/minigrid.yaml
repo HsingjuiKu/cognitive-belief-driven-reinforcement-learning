@@ -1,6 +1,6 @@
 agent: "DQN"
 env_name: "MiniGrid"
-env_id: "MiniGrid-Empty-5x5-v0"
+env_id: "MiniGrid-PutNear-8x8-N3-v0"
 RGBImgPartialObsWrapper: False
 ImgObsWrapper: False
 vectorize: "Dummy_MiniGrid"
@@ -8,39 +8,35 @@ policy: "Basic_Q_network"
 representation: "Basic_MLP"
 runner: "DRL"
 
-representation_hidden_size: [128,]
-q_hidden_size: [128,]
+representation_hidden_size: [64,]
+q_hidden_size: [64,]
 activation: 'relu'
 
 
-seed: 79811
+seed: 123
 parallels: 10
-buffer_size: 100000
+buffer_size: 10000
 batch_size: 256
 learning_rate: 0.001
 gamma: 0.99
 
 start_greedy: 0.5
-
-
-
-start_greedy: 0.5
 end_greedy: 0.01
-decay_step_greedy: 10000
+decay_step_greedy: 200000
 sync_frequency: 50
 training_frequency: 1
-running_steps:  100000  # 200k
+running_steps: 2000000  # 200k
 start_training: 1000
 
 
 
-use_obsnorm: True
-use_rewnorm: True
+use_obsnorm: False
+use_rewnorm: False
 obsnorm_range: 5
 rewnorm_range: 5
 
 test_steps: 10000
-eval_interval: 1000
-test_episode: 5
+eval_interval: 20000
+test_episode: 1
 log_dir: "./logs/dqn/"
 model_dir: "./models/dqn/"

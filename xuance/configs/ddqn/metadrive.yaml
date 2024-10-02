@@ -21,7 +21,7 @@ q_hidden_size: [256, 256]  # 增加 Q 网络的隐藏层大小以适应环境复
 activation: 'relu'  # ReLU 激活函数依然合适
 
 
-seed: 123
+seed: 321
 parallels: 10
 buffer_size: 500000
 batch_size: 64
