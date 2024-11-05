@@ -20,7 +20,8 @@ from .policy_gradient import (
     SACDIS_Learner,
     PDQN_Learner,
     MPDQN_Learner,
-    SPDQN_Learner
+    SPDQN_Learner,
+    CBDSAC_Learner
 )
 
 from .qlearning_family import (

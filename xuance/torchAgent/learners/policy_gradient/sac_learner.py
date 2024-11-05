@@ -28,6 +28,8 @@ class SAC_Learner(Learner):
 
         # actor update
         log_pi, policy_q_1, policy_q_2 = self.policy.Qpolicy(obs_batch)
+        # 提取当前聚类的均值方差
+        # 对应相加取Beta平滑平均
         policy_q = torch.min(policy_q_1, policy_q_2).reshape([-1])
         p_loss = (self.alpha * log_pi.reshape([-1]) - policy_q).mean()
         self.optimizer[0].zero_grad()

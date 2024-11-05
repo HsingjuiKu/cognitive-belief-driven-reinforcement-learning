@@ -120,8 +120,8 @@ from sklearn.cluster import MiniBatchKMeans
 from collections import defaultdict
 
 class StateCategorizer:
-    def __init__(self, action_space, n_categories, buffer_size, device):
-        self.action_space = action_space
+    def __init__(self, action_dim, n_categories, buffer_size, device):
+        self.action_dim = action_dim
         self.n_categories = n_categories
         self.buffer_size = buffer_size
         self.device = device
@@ -132,6 +132,9 @@ class StateCategorizer:
 
         # 初始化动作偏好字典
         self.action_counts = defaultdict(lambda: defaultdict(int))
+        self.belief_mu = defaultdict(lambda: torch.zeros(action_dim, device=device))  # Mean
+        self.belief_sigma2 = defaultdict(lambda: torch.ones(action_dim, device=device))  # Variance
+        self.counts = defaultdict(int)
 
     def initialize_clusters(self):
         flattened_states = torch.stack(self.state_buffer).view(len(self.state_buffer), -1).cpu().numpy()
@@ -158,6 +161,14 @@ class StateCategorizer:
             nearest_category = torch.argmin(distances).item()
             self.state_categories[state_tuple] = nearest_category
             return nearest_category
+            
+    def get_categories_batch(self, states_batch):
+        """Get categories for a batch of states."""
+        categories = []
+        for state in states_batch:
+            category = self.get_category(state)
+            categories.append(category)
+        return torch.tensor(categories, device=self.device)
 
     def update_action_counts(self, state, action):
         category = self.get_category(state)
@@ -179,3 +190,62 @@ class StateCategorizer:
 
         combined_probs = beta * prior_probs + (1 - beta) * immediate_belief
         return combined_probs / combined_probs.sum()
+
+    def compute_belief_distribution(self, state, immediate_belief=None, beta=0.5):
+        prior_probs = self.get_action_prob(state)
+        if immediate_belief is None:
+            return prior_probs
+
+        combined_probs = beta * prior_probs + (1 - beta) * immediate_belief
+        return combined_probs / combined_probs.sum()
+
+    # def update_belief(self, state, dist):
+    #     """Apply Bayesian update to belief distribution parameters based on new action."""
+    #     category = self.get_category(state)
+    #     mu_b = self.belief_mu[category]
+    #     sigma2_b = self.belief_sigma2[category]
+    #
+    #     # Bayesian update for Gaussian parameters
+    #     sigma2_a = dist[1]
+    #     mu_b_new = (sigma2_b * dist[0] + sigma2_a * mu_b) / (sigma2_b + sigma2_a)
+    #     sigma2_b_new = (1 / (1 / sigma2_b + 1 / sigma2_a))
+    #
+    #     # Update the belief parameters for the category
+    #     self.belief_mu[category] = mu_b_new
+    #     self.belief_sigma2[category] = sigma2_b_new
+
+    def update_belief(self, category, dist):
+        """使用增量更新的贝叶斯更新方法，更新每个类别的均值和方差。"""
+        # category = self.get_category(state)
+        mu_b = self.belief_mu[category]
+        sigma2_b = self.belief_sigma2[category]
+        count = self.counts[category]
+
+        # 新数据的均值和方差
+        mu_a, sigma2_a= dist.get_param()
+        # sigma2_a = dist.get_variance()
+
+        # 更新计数器
+        self.counts[category] += 1
+        new_count = self.counts[category]
+
+        # # 增量更新均值和方差
+        # mu_b_new = (count * mu_b + mu_a) / new_count
+        # sigma2_b_new = (count * (sigma2_b + mu_b ** 2) + sigma2_a + mu_a ** 2) / new_count - mu_b_new ** 2
+
+        # 贝叶斯后验更新均值
+        mu_b_new = (sigma2_b * mu_a + sigma2_a * mu_b) / (sigma2_b + sigma2_a)
+        # 贝叶斯后验更新方差
+        sigma2_b_new = 1 / (1 / sigma2_b + 1 / sigma2_a)
+
+        # 更新均值和方差
+        self.belief_mu[category] = mu_b_new
+        self.belief_sigma2[category] = sigma2_b_new
+
+    def get_belief_distribution(self, state):
+        """Retrieve the current belief distribution (Gaussian) for the given state."""
+        category = self.get_category(state)
+        mu_b = self.belief_mu[category]
+        sigma2_b = self.belief_sigma2[category]
+        count_b = self.counts[category]
+        return mu_b, sigma2_b, count_b

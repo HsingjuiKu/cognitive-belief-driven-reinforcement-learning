@@ -10,3 +10,4 @@ from .ddpg_agent import DDPG_Agent
 from .sac_agent import SAC_Agent
 from .sacdis_agent import SACDIS_Agent
 from .td3_agent import TD3_Agent
+from .cbdsac_agent import CBDSAC_Agent
