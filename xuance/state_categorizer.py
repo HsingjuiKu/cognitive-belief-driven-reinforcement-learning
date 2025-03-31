@@ -229,14 +229,9 @@ class StateCategorizer:
         self.counts[category] += 1
         new_count = self.counts[category]
 
-        # # 增量更新均值和方差
-        # mu_b_new = (count * mu_b + mu_a) / new_count
-        # sigma2_b_new = (count * (sigma2_b + mu_b ** 2) + sigma2_a + mu_a ** 2) / new_count - mu_b_new ** 2
-
-        # 贝叶斯后验更新均值
-        mu_b_new = (sigma2_b * mu_a + sigma2_a * mu_b) / (sigma2_b + sigma2_a)
-        # 贝叶斯后验更新方差
-        sigma2_b_new = 1 / (1 / sigma2_b + 1 / sigma2_a)
+        # 增量更新均值和方差
+        mu_b_new = (count * mu_b + mu_a) / new_count
+        sigma2_b_new = (count * (sigma2_b + mu_b ** 2) + sigma2_a + mu_a ** 2) / new_count - mu_b_new ** 2
 
         # 更新均值和方差
         self.belief_mu[category] = mu_b_new

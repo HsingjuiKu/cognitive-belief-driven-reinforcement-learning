@@ -27,7 +27,7 @@ class SAC_Learner(Learner):
         ter_batch = torch.as_tensor(terminal_batch, device=self.device)
 
         # actor update
-        log_pi, policy_q_1, policy_q_2 = self.policy.Qpolicy(obs_batch)
+        log_pi, policy_q_1, policy_q_2, _ = self.policy.Qpolicy(obs_batch)
         # 提取当前聚类的均值方差
         # 对应相加取Beta平滑平均
         policy_q = torch.min(policy_q_1, policy_q_2).reshape([-1])
@@ -38,7 +38,7 @@ class SAC_Learner(Learner):
 
         # critic update
         action_q_1, action_q_2 = self.policy.Qaction(obs_batch, act_batch)
-        log_pi_next, target_q = self.policy.Qtarget(next_batch)
+        log_pi_next, target_q, _ = self.policy.Qtarget(next_batch)
         target_value = target_q - self.alpha * log_pi_next.reshape([-1])
         backup = rew_batch + (1 - ter_batch) * self.gamma * target_value
         q_loss = F.mse_loss(action_q_1, backup.detach()) + F.mse_loss(action_q_2, backup.detach())

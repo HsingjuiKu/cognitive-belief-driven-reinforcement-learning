@@ -12,8 +12,8 @@ critic_hidden_size: [256, 256]
 activation: "leaky_relu"
 activation_action: 'tanh'
 
-seed: 1
-parallels: 4  # number of environments
+seed: 123
+parallels: 10  # number of environments
 buffer_size: 1000000
 batch_size: 256
 actor_learning_rate: 0.001

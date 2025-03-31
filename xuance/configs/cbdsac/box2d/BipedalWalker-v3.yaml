@@ -13,7 +13,7 @@ activation: "leaky_relu"
 activation_action: 'tanh'
 
 seed: 123
-parallels: 10  # number of environments
+parallels: 200  # number of environments
 buffer_size: 200000
 batch_size: 256
 actor_learning_rate: 0.001
@@ -24,7 +24,7 @@ use_automatic_entropy_tuning: True
 tau: 0.005
 
 training_frequency: 1
-running_steps: 5000000
+running_steps: 3000000
 start_training: 2000
 
 use_obsnorm: False
@@ -37,7 +37,7 @@ eval_interval: 500000
 test_episode: 5
 
 k: 2
-n_clusters: 10
+n_clusters: 1
 beta_max: 0.5
 
 log_dir: "./logs/cbdsac/"

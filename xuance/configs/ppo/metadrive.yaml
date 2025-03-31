@@ -1,11 +1,19 @@
 agent: "PPO_Clip"  # choice: PPO_Clip, PPO_KL
 env_name: "MetaDrive"
 env_id: "metadrive"
-env_config:  # the configs for MetaDrive environment
-  map: "C"  # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
+env_config:  # the configs for MetaDrive environmen
+  map: "XTSC"  # see https://metadrive-simulator.readthedocs.io/en/latest/rl_environments.html#generalization-environment for choices
+  discrete_action: True
+  traffic_density: 0.5
+  num_scenarios: 10
+  accident_prob: 0.8
+  horizon: 3000
+  discrete_throttle_dim: 5
+  discrete_steering_dim: 5
+
 render: False
 vectorize: "Subproc_MetaDrive"
-policy: "Gaussian_AC"  # choice: Gaussian_AC for continuous actions, Categorical_AC for discrete actions.
+policy: "Categorical_AC"  # choice: Gaussian_AC for continuous actions, Categorical_AC for discrete actions.
 representation: "Basic_MLP"
 runner: "DRL"
 
@@ -15,9 +23,9 @@ critic_hidden_size: [512, 512]
 activation: "leaky_relu"
 activation_action: 'tanh'
 
-seed: 1
+seed: 123
 parallels: 10
-running_steps: 500000
+running_steps: 2000000
 horizon_size: 128  # the horizon size for an environment, buffer_size = horizon_size * parallels.
 n_epoch: 4
 n_minibatch: 4

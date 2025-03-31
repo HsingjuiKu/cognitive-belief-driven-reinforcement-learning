@@ -12,7 +12,7 @@ critic_hidden_size: [256, 256]
 activation: "leaky_relu"
 activation_action: 'tanh'
 
-seed: 1
+seed: 123
 parallels: 10  # number of environments
 buffer_size: 200000
 batch_size: 256
@@ -24,7 +24,7 @@ tau: 0.005
 start_noise: 0.5
 end_noise: 0.1
 training_frequency: 1
-running_steps: 2000000
+running_steps: 3000000
 start_training: 1000
 
 use_obsnorm: False

@@ -12,7 +12,7 @@ critic_hidden_size: [400, 300]
 activation: "leaky_relu"
 activation_action: 'tanh'
 
-seed: 19089
+seed: 123
 parallels: 4  # number of environments
 buffer_size: 200000  # replay buffer size
 batch_size: 100

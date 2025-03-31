@@ -50,7 +50,7 @@ class CBDSAC_Agent(Agent):
                               lr_policy=config.actor_learning_rate)
         self.state_categorizer = StateCategorizer(
             action_dim=self.action_space.shape[0],
-            n_categories=getattr(config, 'n_categories', 10),
+            n_categories=getattr(config, 'n_categories', 1),
             buffer_size=1000,
             device=device
         )
@@ -58,10 +58,13 @@ class CBDSAC_Agent(Agent):
         super(CBDSAC_Agent, self).__init__(config, envs, policy, memory, learner, device, config.log_dir, config.model_dir)
         self.generate_initial_states()
 
+
     def generate_initial_states(self):
-        model_path = "models/sac/torchAgent/Ant-v4/seed_1_2024_1101_154815/final_train_model.pth"
+        model_path = "models/sac/torchAgent/BipedalWalker-v3/seed_123_2024_1106_125215/final_train_model.pth"
         self.policy2.load_state_dict(torch.load(model_path, map_location=self.device))
         self.policy2.eval()
+    
+        # 重置环境，获取初始观测
         obs = self.envs.reset()
         for _ in tqdm(range(5000)):
             with torch.no_grad():
