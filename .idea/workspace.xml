@@ -5,23 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3d2e85a-c833-4e32-af10-d1046cb66406" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/xuance/configs/a2c/box2d/BipedalWalker-v3.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/a2c/box2d/BipedalWalker-v3.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/a2c/mujoco.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/a2c/mujoco.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/basic.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/basic.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/cbddqn/metadrive.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/cbddqn/metadrive.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/cbdsac/box2d/BipedalWalker-v3.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/cbdsac/box2d/BipedalWalker-v3.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/cbdsac/mujoco.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/cbdsac/mujoco.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/ddpg/box2d/BipedalWalker-v3.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ddpg/box2d/BipedalWalker-v3.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/ddpg/mujoco.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ddpg/mujoco.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/dqn/metadrive.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/dqn/metadrive.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/ppo/box2d/BipedalWalker-v3.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ppo/box2d/BipedalWalker-v3.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/ppo/metadrive.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ppo/metadrive.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/ppo/mujoco.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/ppo/mujoco.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/sac/box2d/BipedalWalker-v3.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/sac/box2d/BipedalWalker-v3.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/configs/sac/mujoco.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/configs/sac/mujoco.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/state_categorizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/state_categorizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/torchAgent/agents/policy_gradient/cbdsac_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/torchAgent/agents/policy_gradient/cbdsac_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xuance/torchAgent/learners/policy_gradient/sac_learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/xuance/torchAgent/learners/policy_gradient/sac_learner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +62,8 @@
       <workItem from="1725929779157" duration="301000" />
       <workItem from="1728064827690" duration="1000" />
       <workItem from="1743446634161" duration="7000" />
+      <workItem from="1743839919166" duration="2384000" />
+      <workItem from="1743877943735" duration="190000" />
     </task>
     <servers />
   </component>
