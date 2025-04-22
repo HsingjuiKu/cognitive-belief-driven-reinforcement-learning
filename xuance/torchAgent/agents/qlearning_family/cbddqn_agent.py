@@ -414,6 +414,8 @@ class CBDDQN_Agent(Agent):
             device=device
         )
 
+        
+
         super(CBDDQN_Agent, self).__init__(config, envs, policy, memory, learner, device, config.log_dir,
                                            config.model_dir)
         # 预加载模型并生成状态
@@ -443,11 +445,11 @@ class CBDDQN_Agent(Agent):
     #                 obs = next_obs
 
     def generate_initial_states(self):
-        model_path = "xuance/torchAgent/agents/qlearning_family/best_model.pth"
+        model_path = "models/dqn/torchAgent/ALE/Amidar-v5/seed_321_2025_0401_122222/final_train_model.pth"
         self.policy2.load_state_dict(torch.load(model_path, map_location=self.device))
         self.policy2.eval()
         obs = self.envs.reset()
-        for _ in tqdm(range(10000)):
+        for _ in tqdm(range(5000)):
             with torch.no_grad():
                 _, action, _ = self.policy2(obs[0])  # 直接使用原始的obs[0]
                 action = action.cpu().numpy()

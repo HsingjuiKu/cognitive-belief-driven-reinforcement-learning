@@ -21,7 +21,8 @@ from .policy_gradient import (
     PDQN_Learner,
     MPDQN_Learner,
     SPDQN_Learner,
-    CBDSAC_Learner
+    CBDSAC_Learner,
+    CBDPPO_Learner
 )
 
 from .qlearning_family import (

@@ -19,6 +19,11 @@ class PPOCLIP_Agent(Agent):
                  optimizer: torch.optim.Optimizer,
                  scheduler: Optional[torch.optim.lr_scheduler._LRScheduler] = None,
                  device: Optional[Union[int, str, torch.device]] = None):
+        # print("\n===== Environment Vector Info =====")
+        # print(f"Type: {type(envs)}")
+        # print(f"Number of Environments: {envs.num_envs}")
+        # print(f"Observation Space: {envs.observation_space}")
+        # print(f"Action Space: {envs.action_space}")
         self.render = config.render
         self.n_envs = envs.num_envs
         self.horizon_size = config.horizon_size
@@ -30,7 +35,7 @@ class PPOCLIP_Agent(Agent):
         self.observation_space = envs.observation_space
         self.action_space = envs.action_space
         self.auxiliary_info_shape = {"old_logp": ()}
-
+        print(self.action_space)
         self.atari = True if config.env_name == "Atari" else False
         Buffer = DummyOnPolicyBuffer_Atari if self.atari else DummyOnPolicyBuffer
         self.buffer_size = self.n_envs * self.horizon_size

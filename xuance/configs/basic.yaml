@@ -1,6 +1,6 @@
 dl_toolbox: "torchAgent"  # The deep learning toolbox. Choices: "torchAgent", "mindspore", "tensorflow"
 
-project_name: "XuanCe_Continus_cbdq"
+project_name: "Atari"
 logger: "wandb"  # Choices: "tensorboard", "wandb".
 # logger: "tensorboard"
 wandb_user_name: "hsingjui-ku"
