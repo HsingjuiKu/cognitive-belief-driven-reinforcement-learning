@@ -41,7 +41,6 @@ class CBDPPO_Agent(Agent):
         self.auxiliary_info_shape = {"old_logp": ()}
         self.frequency = 0
         self.policy2 = policy
-        self.parallel = config.parallels
 
         self.atari = True if config.env_name == "Atari" else False
         Buffer = DummyOnPolicyBuffer_Atari if self.atari else DummyOnPolicyBuffer
@@ -67,16 +66,6 @@ class CBDPPO_Agent(Agent):
                                   clip_grad_norm=config.clip_grad_norm,
                                   use_grad_clip=config.use_grad_clip)
  
-        # self.state_categorizer = StateCategorizer(
-        #     action_space=self.action_space.n,
-        #     n_categories=config.n_clusters,     # codebook大小
-        #     buffer_size=5000,       # 用于离线训练 VQ-VAE
-        #     device=device,
-        #     in_channels=4,                       # Atari常用 4-frame stack
-        #     latent_dim=64,                       # 自定义
-        #     commitment_cost=0.25
-        # )
-
         self.state_categorizer = StateCategorizer(
             action_dim=self.action_space.n,
             n_categories=getattr(config, 'n_categories', 10),
@@ -84,15 +73,12 @@ class CBDPPO_Agent(Agent):
             device=device
         )
 
-
-
         super(CBDPPO_Agent, self).__init__(config, envs, policy, memory, learner, device,
                                             config.log_dir, config.model_dir)
         self.generate_initial_states()
-        self.iterations = 0
 
     def generate_initial_states(self):
-        model_path = "models/ppo/torchAgent/ALE/Asteroids-ram-v5/seed_321_2025_0415_055132/final_train_model.pth"
+        model_path = "/home/hui/cognitive-belief-driven-qlearning/models/ppo/torchAgent/LunarLander-v2/seed_33_2025_0518_125738/final_train_model.pth"
         self.policy2.load_state_dict(torch.load(model_path, map_location=self.device))
         self.policy2.eval()
     
@@ -103,6 +89,7 @@ class CBDPPO_Agent(Agent):
                 # obs = self._process_observation(obs)
                 _, dists, vs = self.policy2(obs[0])
                 acts = dists.stochastic_sample()
+                acts = acts.detach().cpu().numpy()
                 next_obs, _, _, _, _ = self.envs.step(acts)
                 self.state_categorizer.add_to_state_buffer(next_obs[0]) # 只取环境返回的第一个元素
                 obs = np.expand_dims(next_obs,axis = 0)
@@ -115,49 +102,6 @@ class CBDPPO_Agent(Agent):
         acts = acts.detach().cpu().numpy()
         logps = logps.detach().cpu().numpy()
         return acts, vs, logps
-
-    # def _action(self, obs):
-    #     # 从策略网络获得输出，包括原始动作分布和价值估计
-    #     outputs, a_dist, v_pred = self.policy(obs)
-    #     # 原始网络输出的概率，形状：[batch_size, num_actions]
-    #     network_probs = a_dist.probs
-
-    #     batch_size = obs.shape[0]
-    #     if self.iterations > (50000000/self.parallel) / 4:
-    #         Beta = min(0 + 1/(50000000/self.parallel) * self.iterations, 1)
-    #     else:
-    #         Beta = 0
-    #     belief_list = []
-    #     # 针对每个样本，从 state_categorizer 获得累计信念分布
-    #     for i in range(batch_size):
-    #         # get_action_prob 返回一个 numpy 数组，比如 [0.6, 0.4]（已归一化）
-    #         belief_np = self.state_categorizer.get_action_prob(obs[i])
-    #         # 转换为 tensor，确保数据类型和设备一致
-    #         belief_tensor = torch.tensor(belief_np, device=self.device, dtype=network_probs.dtype)
-    #         belief_list.append(belief_tensor.unsqueeze(0))
-    #     belief_probs = torch.cat(belief_list, dim=0)  # 形状：[batch_size, num_actions]
-
-    #     # 利用融合公式计算混合概率：mix_probs = (1 - beta)*network_probs + beta*belief_probs
-    #     mix_probs = (1 - Beta) * network_probs + Beta * belief_probs
-    #     # 归一化防止数值偏差
-    #     mix_probs = mix_probs / mix_probs.sum(dim=1, keepdim=True)
-
-    #     # 构造融合后的离散分布
-    #     fused_dist = torch.distributions.Categorical(probs=mix_probs)
-    #     # 从融合分布中采样动作，计算采样动作对应的 log 概率
-    #     actions = fused_dist.sample()
-    #     logps = fused_dist.log_prob(actions)
-    #     self.iterations += 1
-
-
-    #     # 在返回前将其detach并拷回CPU，然后转为numpy
-    #     actions_np = actions.detach().cpu().numpy()
-    #     logps_np = logps.detach().cpu().numpy()
-    #     v_pred_np = v_pred.detach().cpu().numpy()
-
-    #     # 返回采样动作、价值估计和融合后的 logp
-    #     return actions_np, logps_np, v_pred_np
-
 
     def train(self, train_steps):
         obs = self.envs.buf_obs
@@ -172,8 +116,8 @@ class CBDPPO_Agent(Agent):
              # 更新动作选择频率
             for o, a in zip(obs, acts):
                 if self.state_categorizer.initialized:
-                    # if self.frequency % 1000 == 0:
-                    self.state_categorizer.update_action_counts(o, a)
+                    if self.frequency % 5000 == 0:
+                        self.state_categorizer.update_action_counts(o, a)
 
             self.memory.store(obs, acts, self._process_reward(rewards), value, terminals, {"old_logp": logps})
             if self.memory.full:

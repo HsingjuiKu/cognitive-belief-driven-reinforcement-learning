@@ -12,3 +12,4 @@ from .sacdis_learner import SACDIS_Learner
 from .td3_learner import TD3_Learner
 from .cbdsac_learner import CBDSAC_Learner
 from .cbdppo_learner import CBDPPO_Learner
+from .cbdtd3_learner import CBDTD3_Learner

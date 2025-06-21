@@ -408,13 +408,11 @@ class CBDDQN_Agent(Agent):
                                  config.sync_frequency)
 
         self.state_categorizer = StateCategorizer(
-            action_space=self.action_space.n,
+            action_dim=self.action_space.n,
             n_categories=getattr(config, 'n_categories', 10),
             buffer_size=10000,
             device=device
         )
-
-        
 
         super(CBDDQN_Agent, self).__init__(config, envs, policy, memory, learner, device, config.log_dir,
                                            config.model_dir)
@@ -445,11 +443,11 @@ class CBDDQN_Agent(Agent):
     #                 obs = next_obs
 
     def generate_initial_states(self):
-        model_path = "models/dqn/torchAgent/ALE/Amidar-v5/seed_321_2025_0401_122222/final_train_model.pth"
+        model_path = "/home/hui/cognitive-belief-driven-qlearning/models/dqn/torchAgent/LunarLander-v2/seed_33_2025_0520_122101/final_train_model.pth"
         self.policy2.load_state_dict(torch.load(model_path, map_location=self.device))
         self.policy2.eval()
         obs = self.envs.reset()
-        for _ in tqdm(range(5000)):
+        for _ in tqdm(range(10000)):
             with torch.no_grad():
                 _, action, _ = self.policy2(obs[0])  # 直接使用原始的obs[0]
                 action = action.cpu().numpy()

@@ -101,7 +101,7 @@ class CBDDQN_Learner(Learner):
 
     def update(self, obs_batch, act_batch, rew_batch, next_batch, terminal_batch, k, state_categorizer):
         self.iterations += 1
-
+        # print(self.iterations)
         beta = min(0.1 + 0.0001 * self.iterations, 10.0)
 
         act_batch = torch.tensor(act_batch, device=self.device)
@@ -110,13 +110,14 @@ class CBDDQN_Learner(Learner):
 
         _, _, evalQ = self.policy(obs_batch)
         _, _, targetQ = self.policy.target(next_batch)
-        times = 0
+        # times = 0
 
         obs_batch = torch.tensor(obs_batch, device=self.device)
         next_batch = torch.tensor(next_batch, device=self.device)
 
         if state_categorizer.initialized:
-            beta_dynamic = min(0.5 + 0.00001 * self.iterations, 1)
+            beta_dynamic = min(0 + 1/199000 * self.iterations, 0.25)
+            # beta_dynamic = 0
             # beta_dynamic = 1
             # prior_probs = np.array(
             #     [state_categorizer.get_action_prob(next_batch[i].cpu().numpy()) for i in range(len(next_batch))])
@@ -127,7 +128,7 @@ class CBDDQN_Learner(Learner):
             prior_probs = prior_probs.to(self.device).float()
             clipped_dist = clipped_softmax(targetQ, beta, k)
             belief_distributions = beta_dynamic * prior_probs + (1 - beta_dynamic) * clipped_dist
-            times += 1
+            # times += 1
         else:
             clipped_dist = clipped_softmax(targetQ, beta, k)
             belief_distributions = clipped_dist

@@ -25,7 +25,7 @@ class TD3_Learner(Learner):
         act_batch = torch.as_tensor(act_batch, device=self.device)
         rew_batch = torch.as_tensor(rew_batch, device=self.device)
         ter_batch = torch.as_tensor(terminal_batch, device=self.device)
-
+        
         # critic update
         action_q_A, action_q_B = self.policy.Qaction(obs_batch, act_batch)
         action_q_A = action_q_A.reshape([-1])

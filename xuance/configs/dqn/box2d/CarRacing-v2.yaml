@@ -14,9 +14,9 @@ strides: [4, 2, 1]  # [2, 2, 2, 2]
 q_hidden_size: [512,]
 activation: 'relu'
 
-seed: 1
-parallels: 2
-buffer_size: 20000
+seed: 33
+parallels: 10
+buffer_size: 100000
 batch_size: 32
 learning_rate: 0.0001
 gamma: 0.99

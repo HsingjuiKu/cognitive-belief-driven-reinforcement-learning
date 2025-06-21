@@ -23,7 +23,9 @@ class PPOCLIP_Learner(Learner):
 
     def update(self, obs_batch, act_batch, ret_batch, value_batch, adv_batch, old_logp):
         self.iterations += 1
+        # print(self.iterations)
         act_batch = torch.as_tensor(act_batch, device=self.device)
+        # print(act_batch.shape)
         ret_batch = torch.as_tensor(ret_batch, device=self.device)
         value_batch = torch.as_tensor(value_batch, device=self.device)
         adv_batch = torch.as_tensor(adv_batch, device=self.device)
@@ -31,7 +33,11 @@ class PPOCLIP_Learner(Learner):
 
         outputs, a_dist, v_pred = self.policy(obs_batch)
         log_prob = a_dist.log_prob(act_batch)
-
+        # print(a_dist.probs)
+        # print(a_dist.get_param())
+        # print(a_dist.get_param().shape)
+        # print(log_prob)
+        # print(log_prob.shape)
         # ppo-clip core implementations 
         ratio = (log_prob - old_logp_batch).exp().float()
         surrogate1 = ratio.clamp(1.0 - self.clip_range, 1.0 + self.clip_range) * adv_batch

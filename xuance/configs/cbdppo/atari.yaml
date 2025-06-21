@@ -22,18 +22,19 @@ activation: "relu"
 
 seed: 321
 parallels: 40
-running_steps: 50000000
+running_steps: 50000000 # 10M
 horizon_size: 128  # the horizon size for an environment, buffer_size = horizon_size * parallels.
 n_epoch: 4
 n_minibatch: 4
 learning_rate: 0.00025
+buffer_size: 5120
 
 use_grad_clip: True
 
 vf_coef: 0.25
 ent_coef: 0.01
-target_kl: 0.25  # for CBDPPO_KL agent
-clip_range: 0.2  # for CBDPPO_Clip agent
+target_kl: 0.25  # for PPO_KL agent
+clip_range: 0.2  # for PPO_Clip agent
 clip_grad_norm: 0.5
 gamma: 0.99
 use_gae: True
@@ -45,8 +46,9 @@ use_rewnorm: False
 obsnorm_range: 5
 rewnorm_range: 5
 
-
+k: 4
 n_clusters: 10
+beta_max: 0.5
 
 test_steps: 10000
 eval_interval: 500000

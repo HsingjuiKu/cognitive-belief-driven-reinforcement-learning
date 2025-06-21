@@ -77,6 +77,7 @@ class PPOCLIP_Agent(Agent):
             step_info = {}
             self.obs_rms.update(obs)
             obs = self._process_observation(obs)
+            
             acts, value, logps = self._action(obs)
             next_obs, rewards, terminals, trunctions, infos = self.envs.step(acts)
 

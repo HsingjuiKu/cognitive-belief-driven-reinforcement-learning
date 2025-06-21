@@ -51,6 +51,7 @@ class TD3_Agent(Agent):
 
     def _action(self, obs, noise_scale=0.0):
         _, action = self.policy(obs)
+        # print(action)
         action = action.detach().cpu().numpy()
         action = action + np.random.normal(size=action.shape) * noise_scale
         return np.clip(action, -1, 1)

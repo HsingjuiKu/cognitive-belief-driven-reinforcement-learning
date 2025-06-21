@@ -47,6 +47,7 @@ class SAC_Agent(Agent):
 
     def _action(self, obs):
         _, action = self.policy(obs)
+        print(action)
         return action.detach().cpu().numpy()
 
     def train(self, train_steps):

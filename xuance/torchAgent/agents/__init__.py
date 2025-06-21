@@ -38,7 +38,8 @@ from .policy_gradient import (
     SAC_Agent,
     SACDIS_Agent,
     CBDSAC_Agent,
-    CBDPPO_Agent
+    CBDPPO_Agent,
+    CBDTD3_Agent
 )
 from .qlearning_family import (
     DQN_Agent,
@@ -84,6 +85,7 @@ REGISTRY = {
     "SAC": SAC_Agent,
     "CBDSAC": CBDSAC_Agent,
     "CBDPPO": CBDPPO_Agent,
+    "CBDTD3": CBDTD3_Agent,
     "SACDIS": SACDIS_Agent,
     "TD3": TD3_Agent,
     "DQN": DQN_Agent,

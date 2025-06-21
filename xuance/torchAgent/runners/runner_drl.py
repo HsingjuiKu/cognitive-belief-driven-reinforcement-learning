@@ -40,7 +40,7 @@ class Runner_DRL(Runner_Base):
         else:
             policy = REGISTRY_Policy[self.args.policy](*input_policy)
 
-        if self.agent_name in ["DDPG", "TD3", "SAC", "SACDIS", "CBDSAC"]:
+        if self.agent_name in ["DDPG", "TD3", "SAC", "SACDIS", "CBDSAC","CBDTD3"]:
             actor_optimizer = torch.optim.Adam(policy.actor_parameters, self.args.actor_learning_rate)
             critic_optimizer = torch.optim.Adam(policy.critic_parameters, self.args.critic_learning_rate)
             actor_lr_scheduler = torch.optim.lr_scheduler.LinearLR(actor_optimizer, start_factor=1.0, end_factor=0.25,

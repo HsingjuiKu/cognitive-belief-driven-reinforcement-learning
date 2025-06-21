@@ -12,3 +12,4 @@ from .sacdis_agent import SACDIS_Agent
 from .td3_agent import TD3_Agent
 from .cbdsac_agent import CBDSAC_Agent
 from .cbdppo_agent import CBDPPO_Agent
+from .cbdtd3_agent import CBDTD3_Agent
