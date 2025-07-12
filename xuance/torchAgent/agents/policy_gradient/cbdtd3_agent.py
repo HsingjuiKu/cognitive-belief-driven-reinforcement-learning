@@ -69,23 +69,23 @@ class CBDTD3_Agent(Agent):
         self.policy2.eval()
     
         # 重置环境，获取初始观测
-        value_buffer = []
+        # value_buffer = []
         obs = self.envs.reset()
         for _ in tqdm(range(5000)):
             with torch.no_grad():
                 action = self._action(obs[0], self.noise_scale)
-                obs_tensor = torch.as_tensor(obs[0], device=self.device).float()
-                action_tensor = torch.as_tensor(action, device = self.device).float()
+                # obs_tensor = torch.as_tensor(obs[0], device=self.device).float()
+                # action_tensor = torch.as_tensor(action, device = self.device).float()
                 
-                action_q_A, action_q_B = self.policy.Qaction(obs_tensor, action_tensor)
-                value_buffer.append(torch.min(action_q_A, action_q_B))
+                # action_q_A, action_q_B = self.policy.Qaction(obs_tensor, action_tensor)
+                # value_buffer.append(torch.min(action_q_A, action_q_B))
 
                 next_obs, _, _, _, _ = self.envs.step(action)
                 self.state_categorizer.add_to_state_buffer(next_obs[0]) # 只取环境返回的第一个元素
                 obs = np.expand_dims(next_obs,axis = 0)
-        # 使用 PyTorch 计算方差（更高效，且支持 GPU）
-        values_tensor = torch.cat(value_buffer)  # 直接在 GPU 上拼接
-        self.sigma0_sq = torch.var(values_tensor, unbiased=True).item()  # ddof=1 对应 unbiased=True
+        # # 使用 PyTorch 计算方差（更高效，且支持 GPU）
+        # values_tensor = torch.cat(value_buffer)  # 直接在 GPU 上拼接
+        # self.sigma0_sq = torch.var(values_tensor, unbiased=True).item()  # ddof=1 对应 unbiased=True
 
     def _action2(self, obs, noise_scale=0.0):
         _, action = self.policy2(obs)
@@ -112,7 +112,7 @@ class CBDTD3_Agent(Agent):
             self.memory.store(obs, acts, self._process_reward(rewards), terminals, self._process_observation(next_obs))
             if self.current_step > self.start_training and self.current_step % self.train_frequency == 0:
                 obs_batch, act_batch, rew_batch, terminal_batch, next_batch = self.memory.sample()
-                step_info = self.learner.update(obs_batch, act_batch, rew_batch, next_batch, terminal_batch, self.state_categorizer, self.sigma0_sq)
+                step_info = self.learner.update(obs_batch, act_batch, rew_batch, next_batch, terminal_batch, self.state_categorizer)
                 step_info["noise_scale"] = self.noise_scale
                 self.log_infos(step_info, self.current_step)
 
