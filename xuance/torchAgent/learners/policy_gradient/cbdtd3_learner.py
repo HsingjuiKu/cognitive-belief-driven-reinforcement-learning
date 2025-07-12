@@ -65,21 +65,21 @@ class CBDTD3_Learner(Learner):
         category = state_categorizer.get_categories_batch(obs_batch)
         # actor update
         if self.iterations % self.delay == 0:
-            # 1️⃣ actor 参与训练
+            # 1️⃣ Generate Action distribution (actor 参与训练)
             rep = self.policy.actor_representation(obs_batch)['state']
             a_det = self.policy.actor(rep)  # 这个保留计算图，用于 loss 和训练
 
-            # 2️⃣ Q 值和 loss 计算，a_blend 也是用它生成的
+            # 2️⃣ Estimate Gradient through current min Q and Action Distribution (Q 值和 loss 计算，a_blend 也是用它生成)
             q1 = self.policy.critic_A(rep, a_det)
             q2 = self.policy.critic_B(rep, a_det)
             q_min = torch.min(q1, q2).mean()
             grad = torch.autograd.grad(q_min, a_det, retain_graph=True)[0]  # ✅ 提取 grad 但保留图
 
-            # 3️⃣ 用 grad 和 phi_batch 计算 delta，融合生成 a_blend
+            # 3️⃣ Experience Combination (用 grad 和 phi_batch 计算 delta，融合生成 a_blend)
             grad = grad.detach()
             phi_batch = torch.stack([
                 state_categorizer.phi_batch[k].to(self.device) for k in category], dim=0)
-            alpha = torch.sum(grad[:, -1:] * phi_batch[:, -1:], dim=1, keepdim=True)
+            alpha = torch.sum(grad[:, -1:] * phi_batch[:, -1:], dim=1, keepdim=True) # 
             beta = torch.clamp(alpha, min=0.0, max=1.0)
             d_i = beta * phi_batch + (1 - beta) * grad
             d_i = d_i / (d_i.norm(dim=1, keepdim=True) + 1e-6)
