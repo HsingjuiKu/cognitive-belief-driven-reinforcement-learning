@@ -61,7 +61,7 @@ class CBDTD3_Learner(Learner):
         if self.scheduler is not None:
             self.scheduler[1].step()
 
-        # category batch
+        # Get the cluster category batch for each data
         category = state_categorizer.get_categories_batch(obs_batch)
         # actor update
         if self.iterations % self.delay == 0:
