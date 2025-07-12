@@ -24,7 +24,7 @@ class StateCategorizer:
         # create a initial tensor list including mu and kappa value for TD3
         # self.mukappa = torch.zeros((self.n_categories,2), device=device)
         self.phi_batch = torch.zeros((self.n_categories,self.action_dim), device = device)
-        self.kappa = torch.zeros(self.n_categories , device = device)
+        # self.kappa = torch.zeros(self.n_categories , device = device)
 
     def initialize_clusters(self):
         flattened_states = torch.stack(self.state_buffer).view(len(self.state_buffer), -1).cpu().numpy()
