@@ -30,10 +30,11 @@ class CBDTD3_Learner(Learner):
         ter_batch = torch.as_tensor(terminal_batch, device=self.device)
         obs_batch = torch.tensor(obs_batch, device=self.device)
         next_batch = torch.tensor(next_batch, device=self.device)
-        
+
+        # Critic upate step (same as TD3)
         # Generate double Q values
         action_q_A, action_q_B = self.policy.Qaction(obs_batch, act_batch)
-        next_q = self.policy.Qtarget(next_batch).reshape([-1])
+        # next_q = self.policy.Qtarget(next_batch).reshape([-1])
         action_q_A = action_q_A.reshape([-1])
         action_q_B = action_q_B.reshape([-1])
 
