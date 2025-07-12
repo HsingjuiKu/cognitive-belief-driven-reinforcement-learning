@@ -21,7 +21,7 @@ class CBDTD3_Learner(Learner):
         self.delay = delay
         super(CBDTD3_Learner, self).__init__(policy, optimizers, schedulers, device, model_dir)
 
-    def update(self, obs_batch, act_batch, rew_batch, next_batch, terminal_batch, state_categorizer,sigma0_sq):
+    def update(self, obs_batch, act_batch, rew_batch, next_batch, terminal_batch, state_categorizer):
         self.iterations += 1
         beta_dynamic = min(0.5 + 0.5/50000 * self.iterations, 1)
 
